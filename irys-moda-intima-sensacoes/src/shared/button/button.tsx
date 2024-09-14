@@ -13,6 +13,7 @@ export const SaveButton = (props: ButtonProps) => {
       variant="contained"
       color="success"
       size="small"
+      onClick={props.onClick}
       loading={props.loading}
       loadingPosition="start"
       startIcon={props.loading ? <MdOutlineRestartAlt /> : <MdCheck />}
@@ -28,6 +29,7 @@ export const DeleteButton = (props: ButtonProps) => {
       variant="contained"
       color="error"
       size="small"
+      onClick={props.onClick}
       loading={props.loading}
       loadingPosition="start"
       startIcon={props.loading ? <MdOutlineRestartAlt /> : <MdDelete />}
@@ -43,6 +45,7 @@ export const CancelButton = (props: ButtonProps) => {
       variant="contained"
       color="error"
       size="small"
+      onClick={props.onClick}
       loading={props.loading}
       loadingPosition="start"
       startIcon={props.loading ? <MdOutlineRestartAlt /> : <MdClose />}

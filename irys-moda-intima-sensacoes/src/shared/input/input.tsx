@@ -9,8 +9,9 @@ export const Input = (props: InputProps) => {
       <TextField
         id={props.label}
         variant="standard"
-        type={props.type ?? "text" }
-
+        type={props.type ?? "text"}
+        onChange={props.onChange}
+        value={props.value}
         defaultValue={props.defaultValue}
         label={props.label}
         disabled={props.disabled}
@@ -61,6 +62,8 @@ export const PasswordInput = (props: InputProps) => {
         disabled={props.disabled}
         fullWidth={props.fullWidth}
         style={props.style}
+        value={props.value}
+        onChange={props.onChange}
         multiline={props.multiline}
         maxRows={props.maxRows}
         size="small"

@@ -2,6 +2,10 @@ import { CSSProperties } from "react";
 
 export interface InputProps {
   label: string;
+  onChange: (
+    value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  value?: any;
   defaultValue?: any;
   disabled?: boolean;
   readOnly?: boolean;
