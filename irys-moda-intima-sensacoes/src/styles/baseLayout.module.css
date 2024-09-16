@@ -1,0 +1,144 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  height: 30px;
+  display: flex;
+  background-color: #F8BACA;
+  overflow: hidden;
+  white-space: nowrap;
+  align-items: center;
+}
+
+.marqueeText {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 10s linear infinite;
+  text-align: center;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* A Navbar */
+
+.navbar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 140px;
+  background-color: #9b270f;
+  color: #fff;
+  padding: 0 20px;
+}
+
+.logo {
+  position: relative;
+  top: 10px;
+  height: 220px;
+  align-content: 210px;
+  object-fit: contain;
+}
+
+.rightSection {
+  position: absolute;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 10px;
+}
+
+.leftSection {
+  position: absolute;
+  left: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-content: center;
+}
+
+.icons {
+  display: flex;
+  gap: 10px;
+}
+
+.searchInput {
+  margin-top: 22px;
+  padding-bottom: 10px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+
+/* A main entre a navbar e o footer */
+.main {
+  display: flex;
+  flex: 1;
+}
+
+/* Sidebar */
+.menuIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  cursor: pointer;
+  color: #fff;
+  font-size: 30px;
+}
+
+/* Container para categorias e subcategorias */
+.categoryContainer {
+  position: relative;
+}
+
+.subCategoryContainer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+}
+
+.showSubCategories {
+  max-height: 500px;
+  /* Ajuste conforme necessário */
+}
+
+.subCategoryItem {
+  padding-left: 20px;
+}
+
+.ListItemButton {
+  transition: background-color 0.4s;
+}
+
+.ListItemButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  /* Adiciona um efeito de hover */
+}
+
+/* Conteúdo ao lado da sidebar */
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Foote */
+.footer {
+  background-color: #9b270f;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}

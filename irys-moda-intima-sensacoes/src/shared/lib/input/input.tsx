@@ -1,6 +1,6 @@
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { InputProps } from "./interface";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Search, Visibility, VisibilityOff } from "@mui/icons-material";
 import React from "react";
 
 export const Input = (props: InputProps) => {
@@ -81,6 +81,60 @@ export const PasswordInput = (props: InputProps) => {
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
+              </InputAdornment>
+            ),
+          },
+        }}
+      />
+    </>
+  );
+};
+
+export const InputSearch = (props: InputProps) => {
+  return (
+    <>
+      <TextField
+        id={props.label}
+        variant="outlined"
+        placeholder={props.label}
+        size="small"
+        className={props.class}
+        value={props.value}
+        onChange={props.onChange}
+        defaultValue={props.defaultValue}
+        disabled={props.disabled}
+        fullWidth={props.fullWidth}
+        style={props.style}
+        multiline={props.multiline}
+        maxRows={props.maxRows}
+        sx={{
+          input: { color: "white" }, // Cor do texto dentro do campo
+          "& label": {
+            color: "white", // Cor da label
+          },
+          "& label.Mui-focused": {
+            color: "white", // Cor da label quando o campo está focado
+          },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "white", // Cor da borda
+            },
+            "&:hover fieldset": {
+              borderColor: "white", // Cor da borda ao passar o mouse
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "white", // Cor da borda quando focado
+            },
+          },
+          "& .MuiInputAdornment-root svg": {
+            color: "white", // Cor do ícone de busca
+          },
+        }}
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search />
               </InputAdornment>
             ),
           },
