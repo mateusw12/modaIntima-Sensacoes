@@ -1,3 +1,8 @@
+import {
+  ABOUT_ITEMS,
+  CATEGORIES,
+  MANAGEMENT_ITEMS,
+} from "@/config/constant/menuConstant";
 import { InputSearch } from "@/shared/lib/input/input";
 import styles from "@/styles/baseLayout.module.css";
 import {
@@ -37,35 +42,6 @@ const Navbar = () => {
   const handleMouseLeave = () => {
     setActiveCategory(null);
   };
-
-  const categories = [
-    {
-      title: "Lingeries",
-      subCategories: ["Calcinhas", "Conjuntos", "Sutiãs"],
-    },
-    {
-      title: "Roupas de Dormir",
-      subCategories: ["Baby Dolls", "Pijamas", "Camisolas"],
-    },
-    {
-      title: "Sex Shop",
-      subCategories: ["Acessórios", "Cosméticos", "Brincadeiras", "Fantasias"],
-    },
-  ];
-
-  const managementItems = [
-    {
-      title: "Cadastros",
-      subItems: [
-        "Produto",
-        "Categoria",
-        "Método de Pagamento",
-        "Oferta",
-        "Rede Social",
-      ],
-    },
-    { title: "Consultas", subItems: ["Produtos", "Pedidos", "Ofertas"] },
-  ];
 
   return (
     <nav className={styles.navbar}>
@@ -116,7 +92,7 @@ const Navbar = () => {
           onClick={(e) => e.stopPropagation()}
         >
           <List>
-            {categories.map((category) => (
+            {CATEGORIES.map((category) => (
               <div
                 key={category.title}
                 className={styles.categoryContainer}
@@ -152,7 +128,31 @@ const Navbar = () => {
           </List>
           <Divider />
           <List>
-            {managementItems.map((item) => (
+            {ABOUT_ITEMS.map((item) => (
+              <div
+                key={item.title}
+                className={styles.categoryContainer}
+                onMouseEnter={() => handleMouseEnter(item.title)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <ListItemText primary={item.title} />
+                  </ListItemButton>
+                </ListItem>
+                <div
+                  className={`${styles.subCategoryContainer} ${
+                    activeCategory === item.title
+                      ? styles.showSubCategories
+                      : ""
+                  }`}
+                ></div>
+              </div>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {MANAGEMENT_ITEMS.map((item) => (
               <div
                 key={item.title}
                 className={styles.categoryContainer}
