@@ -99,6 +99,17 @@
   font-size: 30px;
 }
 
+.iconStyle {
+  color: #fff !important;
+  transform: scale(1.4) !important;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.iconStyle:hover {
+  transform: scale(1.6) !important;
+  color: #e1306c !important;
+}
+
 /* Container para categorias e subcategorias */
 .categoryContainer {
   position: relative;

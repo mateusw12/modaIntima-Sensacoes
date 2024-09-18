@@ -52,7 +52,7 @@ const Navbar = () => {
           size="large"
           onClick={toggleDrawer(true)}
         >
-          <MdMenu style={{ color: "white", transform: "scale(1.5)" }} />
+          <MdMenu className={styles.iconStyle} />
         </IconButton>
       </div>
 
@@ -61,21 +61,15 @@ const Navbar = () => {
       <div className={styles.rightSection}>
         <div className={styles.icons}>
           <IconButton aria-label="notifications" size="medium">
-            <MdNotifications
-              style={{ color: "white", transform: "scale(1.5)" }}
-            />
+            <MdNotifications className={styles.iconStyle} />
           </IconButton>
 
           <IconButton aria-label="account" size="medium">
-            <MdOutlineAccountCircle
-              style={{ color: "white", transform: "scale(1.5)" }}
-            />
+            <MdOutlineAccountCircle className={styles.iconStyle} />
           </IconButton>
 
           <IconButton aria-label="shop" size="medium">
-            <MdOutlineShoppingCart
-              style={{ color: "white", transform: "scale(1.5)" }}
-            />
+            <MdOutlineShoppingCart className={styles.iconStyle} />
           </IconButton>
         </div>
         <InputSearch
