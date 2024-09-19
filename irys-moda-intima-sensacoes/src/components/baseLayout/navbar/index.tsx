@@ -140,7 +140,7 @@ const Navbar = () => {
                       ? styles.showSubCategories
                       : ""
                   }`}
-                ></div>
+                />
               </div>
             ))}
           </List>

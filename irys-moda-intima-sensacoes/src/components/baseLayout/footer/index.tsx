@@ -8,16 +8,12 @@ const Footer = () => {
       <div className={styles.footerContainer}>
         <div className={styles.footerColumn}>
           <h4>Atendimento</h4>
-          <p>
-            <div className={styles.alignIconItems}>
-              <MdPhone size={20} /> (11) 1234-5678
-            </div>
-          </p>
-          <p>
-            <div className={styles.alignIconItems}>
-              <MdEmail size={20} /> contato@irysmoda.com.br
-            </div>
-          </p>
+          <div className={styles.alignIconItems}>
+            <MdPhone size={20} /> (11) 1234-5678
+          </div>
+          <div className={styles.alignIconItems}>
+            <MdEmail size={20} /> contato@irysmoda.com.br
+          </div>
         </div>
 
         <div className={styles.footerColumnInsitut}>
@@ -38,12 +34,14 @@ const Footer = () => {
           style={{ textAlign: "right" }}
         >
           <h4>Compra Segura</h4>
-          <p></p>
         </div>
       </div>
-
       <div className={styles.footerBottom}>
-        <FaInstagram size={38} className={styles.instagramIcon} />
+        <div className={styles.cnpj}>
+          <p>CNPJ: 00.000.000/0000-00</p>
+        </div>
+
+        <FaInstagram className={styles.instagramIcon} />
       </div>
 
       <p className={styles.copyrightText}>
