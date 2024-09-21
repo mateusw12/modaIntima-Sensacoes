@@ -23,10 +23,6 @@ import {
 import Image from "next/image";
 
 const Navbar = () => {
-  const handleSearch = (value: any) => {
-    console.log("value", value);
-  };
-
   const [open, setOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
