@@ -1,5 +1,4 @@
 import {
-  ABOUT_ITEMS,
   CATEGORIES,
   MANAGEMENT_ITEMS,
 } from "@/config/constant/menuConstant";
@@ -45,38 +44,42 @@ const Navbar = () => {
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles.leftSection}>
-        <IconButton
-          className={styles.menuIcon}
-          aria-label="menu"
-          size="large"
-          onClick={toggleDrawer(true)}
-        >
-          <MdMenu className={styles.iconStyle} />
-        </IconButton>
-      </div>
-
-      <img src="/assets/logo/logo.png" alt="Logo" className={styles.logo} />
-
-      <div className={styles.rightSection}>
-        <div className={styles.icons}>
-          <IconButton aria-label="notifications" size="medium">
-            <MdNotifications className={styles.iconStyle} />
-          </IconButton>
-
-          <IconButton aria-label="account" size="medium">
-            <MdOutlineAccountCircle className={styles.iconStyle} />
-          </IconButton>
-
-          <IconButton aria-label="shop" size="medium">
-            <MdOutlineShoppingCart className={styles.iconStyle} />
+      <div className={styles.navContainer}>
+        <div className={styles.navColumnMenu}>
+          <IconButton
+            className={styles.menuIcon}
+            aria-label="menu"
+            size="large"
+            onClick={toggleDrawer(true)}
+          >
+            <MdMenu className={styles.iconStyle} />
           </IconButton>
         </div>
-        <InputSearch
-          class={styles.searchInput}
-          label={"Pesquisar..."}
-          onChange={handleSearch}
-        />
+
+        <div className={styles.navColumnLogo}>
+          <img src="/assets/logo/logo.png" alt="Logo" className={styles.logo} />
+        </div>
+
+        <div className={styles.navColumnIconSearch}>
+          <div className={styles.icons}>
+            <IconButton aria-label="notifications" size="medium">
+              <MdNotifications className={styles.iconStyle} />
+            </IconButton>
+
+            <IconButton aria-label="account" size="medium">
+              <MdOutlineAccountCircle className={styles.iconStyle} />
+            </IconButton>
+
+            <IconButton aria-label="shop" size="medium">
+              <MdOutlineShoppingCart className={styles.iconStyle} />
+            </IconButton>
+          </div>
+          <InputSearch
+            class={styles.searchInput}
+            label={"Pesquisar..."}
+            onChange={handleSearch}
+          />
+        </div>
       </div>
 
       <Drawer open={open} onClose={toggleDrawer(false)}>
@@ -117,30 +120,6 @@ const Navbar = () => {
                     </ListItem>
                   ))}
                 </div>
-              </div>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {ABOUT_ITEMS.map((item) => (
-              <div
-                key={item.title}
-                className={styles.categoryContainer}
-                onMouseEnter={() => handleMouseEnter(item.title)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <ListItem disablePadding>
-                  <ListItemButton>
-                    <ListItemText primary={item.title} />
-                  </ListItemButton>
-                </ListItem>
-                <div
-                  className={`${styles.subCategoryContainer} ${
-                    activeCategory === item.title
-                      ? styles.showSubCategories
-                      : ""
-                  }`}
-                />
               </div>
             ))}
           </List>

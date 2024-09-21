@@ -118,6 +118,30 @@
     font-size: 12px;
   }
 
+  .icons {
+    display: flex;
+    flex-wrap: nowrap;
+    /* Mantém os ícones em uma linha */
+    flex-direction: row;
+  }
+
+  .iconStyle {
+    transform: scale(1) !important;
+  }
+
+  .navColumnIconSearch {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 380px) {
+
+  .navColumnIconSearch {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
 }
 
 /* Header */
@@ -157,6 +181,54 @@
   background-color: #9b270f;
   color: #fff;
   padding: 0 20px;
+
+}
+
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Adiciona alinhamento vertical */
+  width: 100vw;
+  /* Garante que ocupa toda a largura */
+  padding: 20px 0;
+}
+
+.navColumnMenu {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  /* Coloca o menu no início */
+}
+
+.navColumnLogo {
+  flex: 1;
+  /* Permite que a logo ocupe o espaço disponível */
+  display: flex;
+  justify-content: center;
+  /* Centraliza o logo */
+}
+
+.navColumnIconSearch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: auto;
+}
+
+.icons {
+  display: flex;
+  flex-direction: row;
+}
+
+.searchInput {
+  margin-top: 10px;
+  /* Ajuste conforme necessário */
+  padding: 10px;
+  /* Para melhor visualização */
+  border-radius: 4px;
+  border: none;
+  outline: none;
 }
 
 .logo {
@@ -165,37 +237,6 @@
   height: 200px;
   align-content: 210px;
   object-fit: contain;
-}
-
-.rightSection {
-  position: absolute;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  padding-top: 10px;
-}
-
-.leftSection {
-  position: absolute;
-  left: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  align-content: center;
-}
-
-.icons {
-  display: flex;
-  gap: 10px;
-}
-
-.searchInput {
-  margin-top: 22px;
-  padding-bottom: 10px;
-  border-radius: 4px;
-  border: none;
-  outline: none;
 }
 
 /* Sidebar */
@@ -211,7 +252,7 @@
 
 .iconStyle {
   color: #fff !important;
-  transform: scale(1.4) !important;
+  transform: scale(1.4);
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
@@ -266,6 +307,12 @@
   justify-content: space-between;
   text-align: left;
   padding: 20px 0;
+}
+
+.footerColumnSecurity {
+  flex: 1;
+  margin: 0 80px;
+  text-align: right;
 }
 
 .footerColumn {
