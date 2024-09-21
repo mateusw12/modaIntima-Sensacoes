@@ -1,7 +1,4 @@
-import {
-  CATEGORIES,
-  MANAGEMENT_ITEMS,
-} from "@/config/constant/menuConstant";
+import { CATEGORIES, MANAGEMENT_ITEMS } from "@/config/constant/menuConstant";
 import { InputSearch } from "@/shared/lib/input/input";
 import styles from "@/styles/baseLayout.module.css";
 import {
@@ -21,6 +18,7 @@ import {
   MdOutlineAccountCircle,
   MdOutlineShoppingCart,
 } from "react-icons/md";
+import Image from "next/image";
 
 const Navbar = () => {
   const handleSearch = (value: any) => {
@@ -57,7 +55,11 @@ const Navbar = () => {
         </div>
 
         <div className={styles.navColumnLogo}>
-          <img src="/assets/logo/logo.png" alt="Logo" className={styles.logo} />
+          <Image
+            className={styles.logo}
+            src="/assets/logo/logo.png"
+            alt="Logo"
+          />
         </div>
 
         <div className={styles.navColumnIconSearch}>
