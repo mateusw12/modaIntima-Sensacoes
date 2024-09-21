@@ -125,13 +125,21 @@
     flex-direction: row;
   }
 
-  .iconStyle {
-    transform: scale(1) !important;
+  .navColumnIconSearch {
+    flex-direction: row;
+    /* Alinha ícones e input em linha */
+    flex-wrap: wrap;
+    /* Permite que se movam para a próxima linha se não cabem */
   }
 
-  .navColumnIconSearch {
-    display: flex;
-    flex-wrap: wrap;
+  .icons {
+    justify-content: flex-end;
+    flex-direction: column !important;
+  }
+
+  .searchInput {
+    flex: 1;
+    /* Faz o input ocupar o espaço restante */
   }
 }
 
@@ -141,6 +149,20 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+  }
+
+  .navColumnIconSearch {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .icons {
+    justify-content: flex-end;
+    flex-direction: column !important;
+  }
+
+  .searchInput {
+    display: none;
   }
 }
 
@@ -252,7 +274,6 @@
 
 .iconStyle {
   color: #fff !important;
-  transform: scale(1.4);
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
