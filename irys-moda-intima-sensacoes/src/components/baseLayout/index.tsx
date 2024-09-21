@@ -10,7 +10,6 @@ export const BaseLayout = () => {
       <Navbar />
       <div className={styles.main}>
         <div className={styles.content}>
-     
         </div>
       </div>
       <Footer />

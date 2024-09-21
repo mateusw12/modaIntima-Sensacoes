@@ -29,10 +29,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div
-          className={`${styles.footerColumn}`}
-          style={{ textAlign: "right" }}
-        >
+        <div className={`${styles.footerColumnSecurity}`}>
           <h4>Compra Segura</h4>
         </div>
       </div>
