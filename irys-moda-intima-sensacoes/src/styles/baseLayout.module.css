@@ -1,0 +1,394 @@
+/* Estilos básicos */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* A main entre a navbar e o footer */
+.main {
+  display: flex;
+  flex: 1;
+}
+
+/* Conteúdo ao lado da sidebar */
+.content {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Media Queries para Mobile */
+@media (max-width: 768px) {
+
+  /* Layout geral */
+  .layout {
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Ajustando a main */
+  .main {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  /* Conteúdo */
+  .content {
+    padding: 10px;
+  }
+
+  /* Garante espaçamento adequado entre seções */
+  .content>* {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* Ajustando o layout para telas pequenas */
+  .layout {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  /* Ajuste da main para mobile */
+  .main {
+    flex-direction: column;
+    padding: 5px;
+  }
+
+  /* Ajuste do conteúdo */
+  .content {
+    padding: 10px;
+    width: 100%;
+  }
+
+  .footerContainer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footerColumn,
+  .footerColumnInsitut {
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .alignIconItems {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+
+  .footerColumn:last-child {
+    text-align: center;
+    padding-right: 0;
+  }
+
+  .footerColumn h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .footerColumn p {
+    font-size: 14px;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cnpj {
+    font-size: 12px;
+  }
+
+  .instagramIcon {
+    font-size: 28px;
+  }
+
+  .copyrightText {
+    font-size: 12px;
+  }
+
+  .icons {
+    display: flex;
+    flex-wrap: nowrap;
+    /* Mantém os ícones em uma linha */
+    flex-direction: row;
+  }
+
+  .iconStyle {
+    transform: scale(1) !important;
+  }
+
+  .navColumnIconSearch {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 380px) {
+
+  .navColumnIconSearch {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+/* Header */
+.header {
+  height: 30px;
+  display: flex;
+  background-color: #F8BACA;
+  overflow: hidden;
+  white-space: nowrap;
+  align-items: center;
+}
+
+.marqueeText {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 10s linear infinite;
+  text-align: center;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* A Navbar */
+.navbar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  background-color: #9b270f;
+  color: #fff;
+  padding: 0 20px;
+
+}
+
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Adiciona alinhamento vertical */
+  width: 100vw;
+  /* Garante que ocupa toda a largura */
+  padding: 20px 0;
+}
+
+.navColumnMenu {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  /* Coloca o menu no início */
+}
+
+.navColumnLogo {
+  flex: 1;
+  /* Permite que a logo ocupe o espaço disponível */
+  display: flex;
+  justify-content: center;
+  /* Centraliza o logo */
+}
+
+.navColumnIconSearch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: auto;
+}
+
+.icons {
+  display: flex;
+  flex-direction: row;
+}
+
+.searchInput {
+  margin-top: 10px;
+  /* Ajuste conforme necessário */
+  padding: 10px;
+  /* Para melhor visualização */
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+
+.logo {
+  position: relative;
+  top: 10px;
+  height: 200px;
+  align-content: 210px;
+  object-fit: contain;
+}
+
+/* Sidebar */
+.menuIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  cursor: pointer;
+  color: #fff;
+  font-size: 30px;
+}
+
+.iconStyle {
+  color: #fff !important;
+  transform: scale(1.4);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.iconStyle:hover {
+  transform: scale(1.6) !important;
+  color: #e1306c !important;
+}
+
+/* Container para categorias e subcategorias */
+.categoryContainer {
+  position: relative;
+}
+
+.subCategoryContainer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+}
+
+.showSubCategories {
+  max-height: 500px;
+  /* Ajuste conforme necessário */
+}
+
+.subCategoryItem {
+  padding-left: 20px;
+}
+
+.ListItemButton {
+  transition: background-color 0.4s;
+}
+
+.ListItemButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  /* Adiciona um efeito de hover */
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #9b270f;
+  color: #fff;
+  padding: 0px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  padding: 20px 0;
+}
+
+.footerColumnSecurity {
+  flex: 1;
+  margin: 0 80px;
+  text-align: right;
+}
+
+.footerColumn {
+  flex: 1;
+  margin: 0 20px;
+}
+
+.footerColumn:last-child {
+  align-items: flex-end;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.footerColumn h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footerColumn p {
+  margin: 5px 0;
+}
+
+.footerColumnInsitut {
+  flex: 1;
+  margin: 0 20px;
+}
+
+.footerColumnInsitut h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footerColumn p {
+  margin: 5px 0;
+  padding-bottom: 10px;
+}
+
+.footerColumnAlignColumn {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.footerBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  color: white;
+}
+
+.cnpj {
+  font-size: 14px;
+  color: white;
+}
+
+.instagramIcon {
+  color: #fff;
+  font-size: 34px;
+  transition: transform 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+.instagramIcon:hover {
+  transform: scale(1.2);
+  color: #e1306c;
+}
+
+.copyrightText {
+  font-size: 14px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.alignIconItems {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+}

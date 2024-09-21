@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, HTMLAttributes } from "react";
 
 export interface InputProps {
   label: string;
@@ -16,4 +16,5 @@ export interface InputProps {
   icon?: any;
   iconPosition?: "start" | "end";
   type?: "text" | "color" | "email" | "date" | "number";
+  class?: any;
 }
