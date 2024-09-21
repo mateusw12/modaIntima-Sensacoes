@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React from "react";
 import { Modal as AntdModal } from "antd";
 
 const Modal = (props: {
@@ -29,43 +29,9 @@ const Modal = (props: {
     maskClosable,
   } = props;
 
-  const [disabled, setDisabled] = useState(true);
-  const [bounds, setBounds] = useState({
-    left: 0,
-    top: 0,
-    bottom: 0,
-    right: 0,
-  });
-
-  const draggleRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (open && draggleRef.current) {
-      draggleRef.current.style.transform = "translate(0, 0)";
-      draggleRef.current.style.top = "0";
-      draggleRef.current.style.left = "0";
-      draggleRef.current.style.bottom = "0";
-      draggleRef.current.style.right = "0";
-    }
-    setBounds({
-      left: 0,
-      top: 0,
-      bottom: 0,
-      right: 0,
-    });
-  }, [open]);
-
   return (
     <AntdModal
-      title={
-        <div
-          style={{ width: "100%", cursor: "move" }}
-          onMouseOver={() => setDisabled(false)}
-          onMouseOut={() => setDisabled(true)}
-        >
-          <span style={{ fontWeight: "bolder" }}>{title}</span>
-        </div>
-      }
+      title={<span style={{ fontWeight: "bolder" }}>{title}</span>}
       maskClosable={!maskClosable}
       open={open}
       onOk={onOk}
