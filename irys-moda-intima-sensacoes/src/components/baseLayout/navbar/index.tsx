@@ -1,5 +1,4 @@
 import { CATEGORIES, MANAGEMENT_ITEMS } from "@/config/constant/menuConstant";
-import { Input, InputSearch } from "@/shared/lib/input/input";
 import styles from "@/styles/baseLayout.module.css";
 import {
   Box,
