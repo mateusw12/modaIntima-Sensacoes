@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 
 export interface InputProps {
-  label: string;
+  label?: string;
   onChange: (
     value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -17,4 +17,5 @@ export interface InputProps {
   iconPosition?: "start" | "end";
   type?: "text" | "color" | "email" | "date" | "number";
   class?: any;
+  placeholder?: string;
 }

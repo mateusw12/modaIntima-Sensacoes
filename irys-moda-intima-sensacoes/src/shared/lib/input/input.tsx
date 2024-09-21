@@ -7,6 +7,7 @@ export const Input = (props: InputProps) => {
   return (
     <>
       <TextField
+        placeholder={props.placeholder}
         id={props.label}
         variant="standard"
         type={props.type ?? "text"}
