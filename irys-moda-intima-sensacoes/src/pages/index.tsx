@@ -9,7 +9,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/assets/logo/logo.jpg" />
       </Head>
-      <BaseLayout />
+      <div
+        style={{ width: "100%", overflowX: "hidden", boxSizing: "border-box" }}
+      >
+        <BaseLayout />
+      </div>
     </>
   );
 }
