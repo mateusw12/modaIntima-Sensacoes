@@ -137,10 +137,6 @@
     flex-direction: column !important;
   }
 
-  .searchInput {
-    display: none;
-    /* Faz o input ocupar o espaço restante */
-  }
 }
 
 @media (max-width: 380px) {
