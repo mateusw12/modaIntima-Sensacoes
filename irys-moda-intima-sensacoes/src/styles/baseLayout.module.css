@@ -141,8 +141,9 @@
 
 /* Conteúdo ao lado da sidebar */
 .content {
-  flex: 1;
+  display: flex;
   padding: 20px;
+  flex-direction: column;
   overflow-y: auto;
 }
 
@@ -242,3 +243,4 @@
   gap: 10px;
   padding-bottom: 10px;
 }
+
