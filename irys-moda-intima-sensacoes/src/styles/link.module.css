@@ -1,0 +1,10 @@
+.customLink {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.customLink:hover {
+  /* color: #e63946; */
+  color: #F8BACA
+}

@@ -1,6 +1,8 @@
 import styles from "@/styles/baseLayout.module.css";
 import { MdPhone, MdEmail } from "react-icons/md";
 import { FaInstagram } from "react-icons/fa";
+import Link from "next/link";
+import CustomLink from "@/shared/lib/link";
 
 const Footer = () => {
   return (
@@ -25,7 +27,11 @@ const Footer = () => {
             <p>Formas de Entrega</p>
             <p>Dúvidas Frequentes</p>
             <p>Pagamentos</p>
-            <p>Política de Privacidade</p>
+            <p>
+              <CustomLink href={"/termos/politica&privacidade"}>
+                Política de Privacidade
+              </CustomLink>
+            </p>
           </div>
         </div>
 
