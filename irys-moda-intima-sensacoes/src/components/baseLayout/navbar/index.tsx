@@ -21,6 +21,8 @@ import {
   MdSearch,
 } from "react-icons/md";
 import Image from "next/image";
+import CustomLink from "@/shared/lib/link";
+import { AiOutlineHome } from "react-icons/ai";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -54,13 +56,15 @@ const Navbar = () => {
           </div>
 
           <div className={styles.navColumnLogo}>
-            <Image
-              className={styles.logo}
-              src="/assets/logo/logo.png"
-              alt="Logo"
-              width={200}
-              height={200}
-            />
+            <CustomLink href={"/"}>
+              <Image
+                className={styles.logo}
+                src="/assets/logo/logo.png"
+                alt="Logo"
+                width={200}
+                height={200}
+              />
+            </CustomLink>
           </div>
 
           <div className={styles.navColumnIconSearch}>
@@ -86,6 +90,24 @@ const Navbar = () => {
             role="presentation"
             onClick={(e) => e.stopPropagation()}
           >
+            <List>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <ListItem>
+                  <ListItemButton>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: 10,
+                      }}
+                    >
+                      <AiOutlineHome style={{ transform: "scale(1.5)" }} /> Home
+                    </div>
+                  </ListItemButton>
+                </ListItem>
+              </div>
+            </List>
+            <Divider />
             <List>
               {CATEGORIES.map((category) => (
                 <div
