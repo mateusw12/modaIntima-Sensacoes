@@ -1,7 +1,6 @@
 import styles from "@/styles/baseLayout.module.css";
 import { MdPhone, MdEmail } from "react-icons/md";
 import { FaInstagram } from "react-icons/fa";
-import Link from "next/link";
 import CustomLink from "@/shared/lib/link";
 
 const Footer = () => {
