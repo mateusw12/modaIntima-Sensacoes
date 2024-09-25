@@ -88,7 +88,7 @@ const Navbar = () => {
               </IconButton>
 
               <IconButton aria-label="shop" size="medium">
-                <MdOutlineShoppingCart className={styles.iconStyle} />
+                <MdOutlineShoppingCart className={styles.iconStyleShop} />
               </IconButton>
             </div>
           </div>
