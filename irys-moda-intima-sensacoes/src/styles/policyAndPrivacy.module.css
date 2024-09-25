@@ -2,11 +2,18 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f9f9f9;
   color: #333;
   line-height: 1.6;
   font-family: 'Arial', sans-serif;
   text-align: justify;
+ border-top: 6px solid #9b270f;  /* Borda superior mais grossa */
+ border-left: 2px solid #9b270f; /* Laterais mais finas */
+ border-right: 2px solid #9b270f;
+ border-bottom: 2px solid #9b270f;
+
+ /* Arredonda a borda inferior */
+ border-bottom-left-radius: 15px;
+ border-bottom-right-radius: 15px;
 }
 
 .title {
