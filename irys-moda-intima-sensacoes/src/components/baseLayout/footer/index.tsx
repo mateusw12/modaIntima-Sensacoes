@@ -23,7 +23,9 @@ const Footer = () => {
 
             <p>Sobre Nós</p>
             <p>Atendimento</p>
-            <p>Formas de Entrega</p>
+            <CustomLink href={"/formas-de-entrega"}>
+              <p>Formas de Entrega</p>
+            </CustomLink>
             <p>Dúvidas Frequentes</p>
             <p>Pagamentos</p>
             <p>
