@@ -125,20 +125,22 @@
   .icons {
     display: flex;
     flex-wrap: nowrap;
-    /* Mantém os ícones em uma linha */
     flex-direction: row;
+    gap: 20px;
   }
 
   .navColumnIconSearch {
     flex-direction: row;
-    /* Alinha ícones e input em linha */
     flex-wrap: wrap;
-    /* Permite que se movam para a próxima linha se não cabem */
+  }
+
+  .myAccountLabel {
+    display: none;
   }
 
   .icons {
     justify-content: flex-end;
-    flex-direction: column !important;
+    gap: 10px
   }
 
 }
@@ -149,11 +151,6 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-  }
-
-  .navColumnIconSearch {
-    flex-direction: row;
-    flex-wrap: wrap;
   }
 
   .icons {
@@ -181,6 +178,17 @@
   padding-left: 100%;
   animation: marquee 10s linear infinite;
   text-align: center;
+}
+
+.myAccount {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.myAccountLabel {
+  color: #fff;
+  font-size: 16px;
 }
 
 @keyframes marquee {
@@ -233,7 +241,6 @@
 
 .navColumnIconSearch {
   display: flex;
-  flex-direction: column;
   align-items: flex-end;
   margin-left: auto;
 }
