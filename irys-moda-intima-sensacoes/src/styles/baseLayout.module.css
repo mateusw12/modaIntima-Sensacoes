@@ -155,7 +155,7 @@
 
   .icons {
     justify-content: flex-end;
-    flex-direction: column !important;
+    gap: 0px;
   }
 
   .searchInput {
@@ -218,9 +218,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* Adiciona alinhamento vertical */
   width: 100vw;
-  /* Garante que ocupa toda a largura */
   padding: 20px 0;
 }
 
@@ -228,15 +226,12 @@
   display: flex;
   align-items: center;
   margin-right: auto;
-  /* Coloca o menu no início */
 }
 
 .navColumnLogo {
   flex: 1;
-  /* Permite que a logo ocupe o espaço disponível */
   display: flex;
   justify-content: center;
-  /* Centraliza o logo */
 }
 
 .navColumnIconSearch {
@@ -252,9 +247,7 @@
 
 .searchInput {
   margin-top: 10px;
-  /* Ajuste conforme necessário */
   padding: 10px;
-  /* Para melhor visualização */
   border-radius: 4px;
   border: none;
   outline: none;
@@ -334,7 +327,7 @@
   display: flex;
   justify-content: space-between;
   text-align: left;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 
 .footerColumnSecurity {

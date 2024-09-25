@@ -15,7 +15,6 @@ import {
 import { useState } from "react";
 import {
   MdMenu,
-  MdNotifications,
   MdOutlineAccountCircle,
   MdOutlineShoppingCart,
   MdSearch,
@@ -77,7 +76,7 @@ const Navbar = () => {
                 <MdOutlineAccountCircle className={styles.iconStyle} />
                 <p className={styles.myAccountLabel}> Minha Conta</p>
               </IconButton>
-
+              
               <IconButton aria-label="shop" size="medium">
                 <MdOutlineShoppingCart className={styles.iconStyle} />
               </IconButton>
