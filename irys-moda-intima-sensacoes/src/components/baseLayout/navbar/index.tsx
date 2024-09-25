@@ -69,12 +69,13 @@ const Navbar = () => {
 
           <div className={styles.navColumnIconSearch}>
             <div className={styles.icons}>
-              <IconButton aria-label="notifications" size="medium">
-                <MdNotifications className={styles.iconStyle} />
-              </IconButton>
-
-              <IconButton aria-label="account" size="medium">
+              <IconButton
+                aria-label="account"
+                size="medium"
+                className={styles.myAccount}
+              >
                 <MdOutlineAccountCircle className={styles.iconStyle} />
+                <p className={styles.myAccountLabel}> Minha Conta</p>
               </IconButton>
 
               <IconButton aria-label="shop" size="medium">
