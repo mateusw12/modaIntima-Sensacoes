@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import {
+  MdClose,
   MdMenu,
   MdOutlineAccountCircle,
   MdOutlineShoppingCart,
@@ -22,6 +23,7 @@ import {
 import Image from "next/image";
 import CustomLink from "@/shared/lib/link";
 import { AiOutlineHome } from "react-icons/ai";
+import { styled } from "@mui/material/styles";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -38,6 +40,14 @@ const Navbar = () => {
   const handleMouseLeave = () => {
     setActiveCategory(null);
   };
+
+  const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end",
+  }));
 
   return (
     <>
@@ -76,7 +86,7 @@ const Navbar = () => {
                 <MdOutlineAccountCircle className={styles.iconStyle} />
                 <p className={styles.myAccountLabel}> Minha Conta</p>
               </IconButton>
-              
+
               <IconButton aria-label="shop" size="medium">
                 <MdOutlineShoppingCart className={styles.iconStyle} />
               </IconButton>
@@ -90,6 +100,11 @@ const Navbar = () => {
             role="presentation"
             onClick={(e) => e.stopPropagation()}
           >
+            <DrawerHeader>
+              <IconButton onClick={toggleDrawer(false)}>
+                <MdClose />
+              </IconButton>
+            </DrawerHeader>
             <List>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <ListItem>
