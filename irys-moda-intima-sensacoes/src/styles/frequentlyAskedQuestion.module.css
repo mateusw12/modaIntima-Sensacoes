@@ -22,8 +22,13 @@
     margin-bottom: 20px;
 }
 
+.text {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
 .accordion {
-    background-color:#f57c9a !important;
+    background-color:#F8BACA !important;
     border-radius: 10px;
     margin-bottom: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
