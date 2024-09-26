@@ -1,20 +1,7 @@
-import { CATEGORIES, MANAGEMENT_ITEMS } from "@/config/constant/menuConstant";
 import styles from "@/styles/baseLayout.module.css";
-import {
-  Box,
-  Divider,
-  Drawer,
-  IconButton,
-  InputAdornment,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  TextField,
-} from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
 import {
-  MdClose,
   MdMenu,
   MdOutlineAccountCircle,
   MdOutlineShoppingCart,
@@ -22,32 +9,10 @@ import {
 } from "react-icons/md";
 import Image from "next/image";
 import CustomLink from "@/shared/lib/link";
-import { AiOutlineHome } from "react-icons/ai";
-import { styled } from "@mui/material/styles";
+import SiderBar from "../siderBar";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-
-  const handleMouseEnter = (category: string) => {
-    setActiveCategory(category);
-  };
-
-  const handleMouseLeave = () => {
-    setActiveCategory(null);
-  };
-
-  const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
-  }));
+  const [toogleDrwaer, setToogleDraer] = useState<boolean>(false);
 
   return (
     <>
@@ -58,7 +23,7 @@ const Navbar = () => {
               className={styles.menuIcon}
               aria-label="menu"
               size="large"
-              onClick={toggleDrawer(true)}
+              onClick={() => setToogleDraer(true)}
             >
               <MdMenu className={styles.iconStyle} />
             </IconButton>
@@ -94,108 +59,10 @@ const Navbar = () => {
           </div>
         </div>
 
-        <Drawer open={open} onClose={toggleDrawer(false)}>
-          <Box
-            sx={{ width: 250 }}
-            role="presentation"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <DrawerHeader>
-              <IconButton onClick={toggleDrawer(false)}>
-                <MdClose />
-              </IconButton>
-            </DrawerHeader>
-            <List>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <ListItem>
-                  <ListItemButton>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        gap: 10,
-                      }}
-                    >
-                      <AiOutlineHome style={{ transform: "scale(1.5)" }} /> Home
-                    </div>
-                  </ListItemButton>
-                </ListItem>
-              </div>
-            </List>
-            <Divider />
-            <List>
-              {CATEGORIES.map((category) => (
-                <div
-                  key={category.title}
-                  className={styles.categoryContainer}
-                  onMouseEnter={() => handleMouseEnter(category.title)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemText primary={category.title} />
-                    </ListItemButton>
-                  </ListItem>
-                  <div
-                    className={`${styles.subCategoryContainer} ${
-                      activeCategory === category.title
-                        ? styles.showSubCategories
-                        : ""
-                    }`}
-                  >
-                    {category.subCategories.map((subCategory) => (
-                      <ListItem
-                        key={subCategory}
-                        disablePadding
-                        className={styles.subCategoryItem}
-                      >
-                        <ListItemButton>
-                          <ListItemText primary={subCategory} />
-                        </ListItemButton>
-                      </ListItem>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </List>
-            <Divider />
-            <List>
-              {MANAGEMENT_ITEMS.map((item) => (
-                <div
-                  key={item.title}
-                  className={styles.categoryContainer}
-                  onMouseEnter={() => handleMouseEnter(item.title)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemText primary={item.title} />
-                    </ListItemButton>
-                  </ListItem>
-                  <div
-                    className={`${styles.subCategoryContainer} ${
-                      activeCategory === item.title
-                        ? styles.showSubCategories
-                        : ""
-                    }`}
-                  >
-                    {item.subItems.map((subItem) => (
-                      <ListItem
-                        key={subItem}
-                        disablePadding
-                        className={styles.subCategoryItem}
-                      >
-                        <ListItemButton>
-                          <ListItemText primary={subItem} />
-                        </ListItemButton>
-                      </ListItem>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </List>
-          </Box>
-        </Drawer>
+        <SiderBar
+          openSider={toogleDrwaer}
+          closeDrawer={() => setToogleDraer(false)}
+        />
       </nav>
       <TextField
         slotProps={{
