@@ -1,4 +1,4 @@
-.deliveryContainer {
+.frequentlyContainer {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
@@ -25,4 +25,25 @@
 .text {
     margin-bottom: 15px;
     font-size: 16px;
+}
+
+.accordion {
+    background-color:#F8BACA;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.accordionSummary {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #9b270f;
+}
+
+.accordionDetails {
+    font-size: 1rem;
+    color: #555;
+    background-color: #fffaf0;
+    border-radius: 0 0 10px 10px;
+    padding: 15px;
 }
