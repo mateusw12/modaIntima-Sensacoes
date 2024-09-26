@@ -23,7 +23,7 @@
 }
 
 .accordion {
-    background-color:#f57c9a;
+    background-color:#f57c9a !important;
     border-radius: 10px;
     margin-bottom: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -32,13 +32,13 @@
 .accordionSummary {
     font-weight: bold;
     font-size: 1.2rem;
-    color: #9b270f;
+    color: #9b270f !important;
 }
 
 .accordionDetails {
     font-size: 1rem;
     color: #555;
-    background-color: #fffaf0;
+    background-color: #fffaf0 !important;
     border-radius: 0 0 10px 10px;
     padding: 15px;
 }
