@@ -26,7 +26,9 @@ const Footer = () => {
             <CustomLink href={"/formas-de-entrega"}>
               <p>Formas de Entrega</p>
             </CustomLink>
-            <p>Dúvidas Frequentes</p>
+            <CustomLink href={"/duvidas-frequentes"}>
+              <p>Dúvidas Frequentes</p>
+            </CustomLink>
             <p>Pagamentos</p>
             <p>
               <CustomLink href={"/termos/politica&privacidade"}>
