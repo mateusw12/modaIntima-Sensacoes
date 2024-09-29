@@ -22,7 +22,9 @@ const Footer = () => {
             <h4>Institucional</h4>
 
             <p>Sobre Nós</p>
-            <p>Atendimento</p>
+            <CustomLink href={"/atendimento"}>
+              <p>Atendimento</p>
+            </CustomLink>
             <CustomLink href={"/formas-de-entrega"}>
               <p>Formas de Entrega</p>
             </CustomLink>
