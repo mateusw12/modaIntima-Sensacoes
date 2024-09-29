@@ -1,0 +1,29 @@
+.customServiceContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+    font-family: 'Arial', sans-serif;
+    text-align: justify;
+    border-top: 6px solid #9b270f;
+    border-left: 2px solid #9b270f;
+    border-right: 2px solid #9b270f;
+    border-bottom: 2px solid #9b270f;
+
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.title {
+    text-align: center;
+    font-size: 32px;
+    color: #9b270f;
+    margin-bottom: 20px;
+}
+
+.text {
+    margin-bottom: 15px;
+    font-size: 16px;
+    text-align: center;
+}
