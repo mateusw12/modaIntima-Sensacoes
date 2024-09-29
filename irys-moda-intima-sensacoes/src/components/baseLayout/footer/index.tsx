@@ -31,7 +31,9 @@ const Footer = () => {
             <CustomLink href={"/duvidas-frequentes"}>
               <p>Dúvidas Frequentes</p>
             </CustomLink>
-            <p>Pagamentos</p>
+            <CustomLink href={"/pagamentos"}>
+              <p>Pagamentos</p>
+            </CustomLink>
             <p>
               <CustomLink href={"/termos/politica&privacidade"}>
                 Política de Privacidade
