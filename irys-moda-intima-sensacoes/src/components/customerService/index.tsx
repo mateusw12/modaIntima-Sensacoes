@@ -115,7 +115,7 @@ const CustomService = () => {
         <h1 className={styles.title}>Atendimento</h1>
         <p className={styles.text}>
           Se preferir, entre em contato direto através do e-mail
-          atendimento@irysmodaintimca.com.br.
+          atendimento@irysmodaintima.com.br.
         </p>
 
         <Box
