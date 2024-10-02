@@ -10,7 +10,6 @@ let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
 if (process.env.NODE_ENV === "development") {
-  // Em modo de desenvolvimento, usar uma variável global para evitar reconectar em cada reload
   let globalWithMongo = global as typeof globalThis & {
     _mongoClientPromise?: Promise<MongoClient>;
   };
@@ -21,10 +20,8 @@ if (process.env.NODE_ENV === "development") {
   }
   clientPromise = globalWithMongo._mongoClientPromise;
 } else {
-  // Em produção, criar uma nova conexão, se necessário
   client = new MongoClient(uri, {});
   clientPromise = client.connect();
 }
 
-// Exportar o clientPromise para ser utilizado nas funções que precisem da conexão
 export default clientPromise;

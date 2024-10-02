@@ -9,9 +9,9 @@ export async function testDatabaseConnection() {
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
-    isConnected = true; // Se chegou aqui, a conexão foi bem-sucedida
+    isConnected = true;
   } catch (e) {
     console.error("Error connecting to MongoDB:", e);
   }
-  return isConnected; // Retorna true se a conexão for bem-sucedida
+  return isConnected;
 }

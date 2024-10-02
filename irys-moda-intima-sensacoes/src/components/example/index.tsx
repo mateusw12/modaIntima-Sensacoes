@@ -18,7 +18,7 @@
 //   useEffect(() => {
 //     const fetchRedesSociais = async () => {
 //       try {
-//         const response = await fetch('/api/rede-social');
+//         const response = await fetch('/api/socialMedia');
 //         const result = await response.json();
 //         setRedesSociais(result);
 //       } catch (error) {
@@ -35,7 +35,7 @@
 //     const redeSocial: ISocialMedia = { cidade, idade: parseInt(idade), nome };
     
 //     try {
-//       const response = await fetch('/api/rede-social', {
+//       const response = await fetch('/api/socialMedia', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',
@@ -63,7 +63,7 @@
 //     const redeSocial: Partial<ISocialMedia> = { cidade, idade: parseInt(idade), nome };
 
 //     try {
-//       const response = await fetch(`/api/rede-social`, {
+//       const response = await fetch(`/api/socialMedia`, {
 //         method: 'PUT',
 //         headers: {
 //           'Content-Type': 'application/json',
@@ -86,7 +86,7 @@
 //   // Deletar uma rede social
 //   const handleDelete = async (id: string) => {
 //     try {
-//       const response = await fetch(`/api/rede-social`, {
+//       const response = await fetch(`/api/socialMedia`, {
 //         method: 'DELETE',
 //         headers: {
 //           'Content-Type': 'application/json',
