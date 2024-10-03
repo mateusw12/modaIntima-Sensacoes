@@ -36,7 +36,11 @@ const Modal = (props: {
       open={open}
       onOk={onOk}
       onCancel={onCancel}
-      footer={footer}
+      footer={
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
+          {footer}
+        </div>
+      }
       width={width}
       style={{ display: "flex", justifyContent: "center" }}
       styles={{
@@ -50,7 +54,7 @@ const Modal = (props: {
         },
       }}
     >
-      {children}
+      <div style={{ paddingTop: 20 }}>{children}</div>
     </AntdModal>
   );
 };

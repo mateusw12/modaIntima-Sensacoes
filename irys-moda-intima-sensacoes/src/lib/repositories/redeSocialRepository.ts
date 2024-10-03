@@ -11,7 +11,7 @@ const getDb = async (): Promise<Db> => {
 // Buscar todas as redes sociais
 export const findAll = async (): Promise<ISocialMedia[]> => {
   const db = await getDb();
-  return db.collection<ISocialMedia>("redeSocials").find({}).toArray();
+  return await db.collection<ISocialMedia>("redeSocials").find({}).toArray();
 };
 
 // Buscar uma rede social por ID

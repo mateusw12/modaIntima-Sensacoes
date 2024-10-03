@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 
 export interface InputProps {
   label?: string;
-  onChange: (
+  onChange?: (
     value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   value?: any;
