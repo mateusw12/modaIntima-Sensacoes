@@ -1,7 +1,5 @@
-import { ObjectId } from "mongodb";
-
 export interface ISocialMedia {
-  _id?: ObjectId;
+  _id?: string;
   nome: string;
   nomeIcone: string;
   path: string;

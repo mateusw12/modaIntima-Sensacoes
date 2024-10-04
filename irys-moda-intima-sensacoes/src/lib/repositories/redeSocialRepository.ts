@@ -15,11 +15,9 @@ export const findAll = async (): Promise<ISocialMedia[]> => {
 };
 
 // Buscar uma rede social por ID
-export const findById = async (id: string): Promise<ISocialMedia | null> => {
+export const findById = async (id: ObjectId): Promise<ISocialMedia | null> => {
   const db = await getDb();
-  return db
-    .collection<ISocialMedia>("redeSocials")
-    .findOne({ _id: new ObjectId(id) });
+  return db.collection<ISocialMedia>("redeSocials").findOne({ id });
 };
 
 // Criar uma nova rede social
@@ -30,19 +28,17 @@ export const create = async (data: ISocialMedia): Promise<void> => {
 
 // Atualizar uma rede social por ID
 export const updateById = async (
-  id: string,
+  id: ObjectId,
   data: Partial<ISocialMedia>
 ): Promise<void> => {
   const db = await getDb();
   await db
     .collection<ISocialMedia>("redeSocials")
-    .updateOne({ _id: new ObjectId(id) }, { $set: data });
+    .updateOne({ id }, { $set: data });
 };
 
 // Deletar uma rede social por ID
-export const deleteById = async (id: string): Promise<void> => {
+export const deleteById = async (id: Object): Promise<void> => {
   const db = await getDb();
-  await db
-    .collection<ISocialMedia>("redeSocials")
-    .deleteOne({ _id: new ObjectId(id) });
+  await db.collection<ISocialMedia>("redeSocials").deleteOne({ id });
 };

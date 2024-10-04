@@ -26,7 +26,15 @@
 //       }
 //     };
 
-//     fetchRedesSociais();
+//     fetchRedesSociais//     const fetchRedesSociais = async () => {
+//       try {
+//         const response = await fetch('/api/socialMedia');
+//         const result = await response.json();
+//         setRedesSociais(result);
+//       } catch (error) {
+//         console.log('Erro ao buscar dados:', error);
+//       }
+//     };();
 //   }, []);
 
 //   // Criar nova rede social

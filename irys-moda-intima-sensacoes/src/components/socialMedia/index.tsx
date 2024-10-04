@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ISocialMedia } from "@/lib/database/models/socialMedia/socialMedia";
 import axios from "axios";
-import {
-  AddButton,
-  CancelButton,
-  SaveButton,
-} from "@/shared/lib/button";
-import { Col, Form, Row, Table } from "antd";
+import { AddButton, CancelButton, SaveButton } from "@/shared/lib/button";
+import { Col, Form, notification, Row, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { Input } from "@/shared/lib/input";
 import Modal from "@/shared/lib/modal";
@@ -37,6 +33,8 @@ interface DataGrid {
 const SocialMedia = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [dataSource, setDataSource] = useState<DataGrid[]>([]);
+  const [isReload, setIsReload] = useState<boolean>(false);
+
   const [form] = Form.useForm<SocialMediaForm>();
 
   const icons: RecordType[] = [
@@ -77,15 +75,46 @@ const SocialMedia = () => {
         }
         setDataSource(data);
       } catch (error) {
-        console.error("Erro ao buscar dados:", error);
+        notification.error({
+          message: "Erro ao carregar os dados!",
+        });
       }
     };
 
     loadingData();
-  }, []);
+  }, [isReload]);
 
-  const handleAddProduct = (values: SocialMediaForm) => {
-    console.log("values", values);
+  const handleAddProduct = async (values: SocialMediaForm) => {
+    const redeSocial: ISocialMedia = {
+      nome: values.name,
+      nomeIcone: values.iconName,
+      path: values.path,
+      _id: values.id,
+    };
+
+    if (!values.id) {
+      await fetch("/api/socialMedia", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(redeSocial),
+      });
+    } else {
+      await fetch(`/api/socialMedia/${values.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(redeSocial),
+      });
+    }
+
+    form.resetFields();
+    notification.success({
+      message: "Salvo com sucesso!",
+    });
+    setIsReload(true);
   };
 
   const columns: ColumnsType<DataGrid> = [
@@ -94,9 +123,31 @@ const SocialMedia = () => {
     { title: "Path", dataIndex: "path", key: "path" },
   ];
 
+  const loadingModal = async (id?: string) => {
+    if (id) {
+      try {
+        const response = await fetch("/api/socialMedia", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id }),
+        });
+        const result = await response.json();
+        console.log("result", result);
+      } catch (error) {
+        notification.error({
+          message: "Não foi possível encontrar o item!",
+        });
+      }
+    }
+
+    setIsModalOpen(true);
+  };
+
   return (
     <div>
-      <AddButton onClick={() => setIsModalOpen(true)} />
+      <AddButton onClick={() => loadingModal()} />
       <Table
         columns={columns}
         dataSource={dataSource}
@@ -107,6 +158,7 @@ const SocialMedia = () => {
         title="Cadastro de Rede Social"
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
+        width={600}
         footer={[
           <CancelButton
             onClick={() => {
@@ -140,20 +192,12 @@ const SocialMedia = () => {
           </Row>
           <Row>
             <Col span={12}>
-              <Form.Item
-                name="iconName"
-                rules={[
-                  {
-                    required: true,
-                    message: "Por favor, insira o ícone",
-                  },
-                ]}
-              >
+              <Form.Item name="iconName">
                 <Select label="Ícone" fullWidth>
                   {icons.map((item) => (
                     <MenuItem
-                      key={item.value}
-                      value={item.value}
+                      key={item.value as string}
+                      value={item.value as string}
                       style={{ display: "flex", alignItems: "center" }}
                     >
                       {item.icon ? (

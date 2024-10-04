@@ -6,6 +6,7 @@ import {
   updateById,
   deleteById
 } from "@/lib/repositories/redeSocialRepository";
+import { ObjectId } from "mongodb";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
@@ -14,7 +15,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case "GET":
       if (req.query.id) {
         // Buscar rede social por ID
-        const redeSocial = await findById(req.query.id as string);
+        const objectId = new ObjectId(req.query.id as string); 
+        const redeSocial = await findById(objectId);
         if (!redeSocial) {
           return res.status(404).json({ message: "Rede social não encontrada" });
         }
@@ -39,7 +41,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ message: "ID é necessário para atualizar" });
       }
       try {
-        await updateById(req.query.id as string, req.body);
+        const objectId = new ObjectId(req.query.id as string); 
+        await updateById(objectId, req.body);
         return res.status(200).json({ message: "Rede social atualizada com sucesso" });
       } catch (error) {
         return res.status(400).json({ message: "Erro ao atualizar a rede social", error });
@@ -50,7 +53,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ message: "ID é necessário para deletar" });
       }
       try {
-        await deleteById(req.query.id as string);
+        const objectId = new ObjectId(req.query.id as string); 
+        await deleteById(objectId);
         return res.status(200).json({ message: "Rede social deletada com sucesso" });
       } catch (error) {
         return res.status(400).json({ message: "Erro ao deletar a rede social", error });
