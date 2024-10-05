@@ -207,12 +207,13 @@ const SocialMedia = () => {
         width={600}
         footer={[
           <CancelButton
+            key={"cancel"}
             onClick={() => {
               form.resetFields();
               setIsModalOpen(false);
             }}
           />,
-          <SaveButton onClick={() => form.submit()} />,
+          <SaveButton key={"save"} onClick={() => form.submit()} />,
         ]}
       >
         <Form form={form} onFinish={handleAddSocialMedia} layout="horizontal">

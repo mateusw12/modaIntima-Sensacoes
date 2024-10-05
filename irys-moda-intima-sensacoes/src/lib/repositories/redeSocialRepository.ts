@@ -32,7 +32,7 @@ export const create = async (data: ISocialMedia): Promise<void> => {
 export const updateById = async (
   data: Partial<ISocialMedia>
 ): Promise<void> => {
-  let _id: ObjectId = convertObjectId(data);
+  const _id: ObjectId = convertObjectId(data);
   data._id = _id;
   const db = await getDb();
   await db.collection("redeSocials").updateOne({ _id }, { $set: data });

@@ -6,7 +6,6 @@ import {
   MdOutlineAdd,
   MdOutlineEdit,
   MdOutlineRestartAlt,
-  MdOutlineSearch,
 } from "react-icons/md";
 
 export interface ButtonProps {
