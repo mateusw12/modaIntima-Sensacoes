@@ -1,0 +1,12 @@
+.dataGridContainer {
+    width: calc(100vw - 100px);
+    padding: 20px;
+}
+
+.dataGridToolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}

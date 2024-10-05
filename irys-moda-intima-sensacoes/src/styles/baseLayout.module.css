@@ -6,19 +6,11 @@
 }
 
 .main {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
   padding: 20px;
 }
 
 .content {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 1000px;
-  width: 100%;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -34,7 +26,6 @@
 
   /* Ajustando a main */
   .main {
-    flex-direction: column;
     padding: 10px;
   }
 
@@ -60,7 +51,6 @@
 
   /* Ajuste da main para mobile */
   .main {
-    flex-direction: column;
     padding: 5px;
   }
 

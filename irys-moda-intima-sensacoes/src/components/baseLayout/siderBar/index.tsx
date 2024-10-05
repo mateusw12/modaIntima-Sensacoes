@@ -14,6 +14,7 @@ import { CATEGORIES, MANAGEMENT_ITEMS } from "@/config/constant/menuConstant";
 import { MdClose } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { useState } from "react";
+import CustomLink from "@/shared/lib/link";
 
 interface SideBarProps {
   openSider: boolean;
@@ -89,17 +90,20 @@ const SiderBar = (props: SideBarProps) => {
                     : ""
                 }`}
               >
-                {category.subCategories.map((subCategory) => (
-                  <ListItem
-                    key={subCategory}
-                    disablePadding
-                    className={styles.subCategoryItem}
-                  >
-                    <ListItemButton>
-                      <ListItemText primary={subCategory} />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
+                {category.subCategories &&
+                  category.subCategories.map((subCategory) => (
+                    <ListItem
+                      key={subCategory.title}
+                      disablePadding
+                      className={styles.subCategoryItem}
+                    >
+                      <ListItemButton disabled={subCategory.disabled}>
+                        <CustomLink href={subCategory.path ?? ""}>
+                          <ListItemText primary={subCategory.title} />
+                        </CustomLink>
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
               </div>
             </div>
           ))}
@@ -123,17 +127,20 @@ const SiderBar = (props: SideBarProps) => {
                   activeCategory === item.title ? styles.showSubCategories : ""
                 }`}
               >
-                {item.subItems.map((subItem) => (
-                  <ListItem
-                    key={subItem}
-                    disablePadding
-                    className={styles.subCategoryItem}
-                  >
-                    <ListItemButton>
-                      <ListItemText primary={subItem} />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
+                {item.subCategories &&
+                  item.subCategories.map((subItem) => (
+                    <ListItem
+                      key={subItem.title}
+                      disablePadding
+                      className={styles.subCategoryItem}
+                    >
+                      <ListItemButton disabled={subItem.disabled}>
+                        <CustomLink href={subItem.path ?? ""}>
+                          <ListItemText primary={subItem.title} />
+                        </CustomLink>
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
               </div>
             </div>
           ))}
