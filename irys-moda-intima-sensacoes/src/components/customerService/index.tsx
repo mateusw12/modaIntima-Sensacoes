@@ -77,8 +77,6 @@ const CustomService = () => {
             };
 
             await sendEmail(sendEmailData);
-            
-            
 
             notification.success({
               message: "Mensagem enviada com sucesso!",
@@ -113,111 +111,113 @@ const CustomService = () => {
           }
         }}
       />
-      <div className={styles.customServiceContainer}>
-        <h1 className={styles.title}>Atendimento</h1>
-        <p className={styles.text}>
-          Se preferir, entre em contato direto através do e-mail
-          atendimento@irysmodaintima.com.br.
-        </p>
+      <div className={styles.container}>
+        <div className={styles.customServiceContainer}>
+          <h1 className={styles.title}>Atendimento</h1>
+          <p className={styles.text}>
+            Se preferir, entre em contato direto através do e-mail
+            atendimento@irysmodaintima.com.br.
+          </p>
 
-        <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          sx={{ mt: 3, maxWidth: "600px", margin: "auto" }}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Nome"
-                {...register("name", { required: "Nome é obrigatório" })}
-                error={!!errors.name}
-                helperText={errors.name?.message}
-                variant="standard"
-              />
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{ mt: 3, maxWidth: "600px", margin: "auto" }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Nome"
+                  {...register("name", { required: "Nome é obrigatório" })}
+                  error={!!errors.name}
+                  helperText={errors.name?.message}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="E-mail"
+                  type="email"
+                  {...register("email", {
+                    required: "E-mail é obrigatório",
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "E-mail inválido",
+                    },
+                  })}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Telefone"
+                  {...register("phone", {
+                    required: "Telefone é obrigatório",
+                    pattern: {
+                      value: /^[0-9]+$/,
+                      message: "Apenas números são permitidos",
+                    },
+                  })}
+                  error={!!errors.phone}
+                  helperText={errors.phone?.message}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="Cidade"
+                  {...register("city", { required: "Cidade é obrigatória" })}
+                  error={!!errors.city}
+                  helperText={errors.city?.message}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="Estado"
+                  {...register("state", { required: "Estado é obrigatório" })}
+                  error={!!errors.state}
+                  helperText={errors.state?.message}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Mensagem"
+                  multiline
+                  rows={4}
+                  {...register("message", {
+                    required: "Mensagem é obrigatória",
+                  })}
+                  error={!!errors.message}
+                  helperText={errors.message?.message}
+                  variant="standard"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="E-mail"
-                type="email"
-                {...register("email", {
-                  required: "E-mail é obrigatório",
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: "E-mail inválido",
-                  },
-                })}
-                error={!!errors.email}
-                helperText={errors.email?.message}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Telefone"
-                {...register("phone", {
-                  required: "Telefone é obrigatório",
-                  pattern: {
-                    value: /^[0-9]+$/,
-                    message: "Apenas números são permitidos",
-                  },
-                })}
-                error={!!errors.phone}
-                helperText={errors.phone?.message}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Cidade"
-                {...register("city", { required: "Cidade é obrigatória" })}
-                error={!!errors.city}
-                helperText={errors.city?.message}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Estado"
-                {...register("state", { required: "Estado é obrigatório" })}
-                error={!!errors.state}
-                helperText={errors.state?.message}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Mensagem"
-                multiline
-                rows={4}
-                {...register("message", {
-                  required: "Mensagem é obrigatória",
-                })}
-                error={!!errors.message}
-                helperText={errors.message?.message}
-                variant="standard"
-              />
-            </Grid>
-          </Grid>
 
-          <Box mt={3}>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={isSubmitting}
-              startIcon={isSubmitting && <CircularProgress size={20} />}
-            >
-              {isSubmitting ? "Enviando..." : "Enviar"}
-            </Button>
+            <Box mt={3}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={isSubmitting}
+                startIcon={isSubmitting && <CircularProgress size={20} />}
+              >
+                {isSubmitting ? "Enviando..." : "Enviar"}
+              </Button>
+            </Box>
           </Box>
-        </Box>
+        </div>
       </div>
     </>
   );

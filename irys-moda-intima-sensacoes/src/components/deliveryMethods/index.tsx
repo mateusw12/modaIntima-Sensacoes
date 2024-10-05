@@ -2,7 +2,7 @@ import styles from "@/styles/deliveryMethod.module.css";
 
 const DeliveryMethod = () => {
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.deliveryContainer}>
         <h1 className={styles.title}>Formas de Entrega</h1>
         <p className={styles.text}>
@@ -36,7 +36,7 @@ const DeliveryMethod = () => {
           </strong>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
