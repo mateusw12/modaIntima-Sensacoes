@@ -76,7 +76,9 @@ export const AddButton = (props: ButtonProps) => {
       loadingPosition="start"
       startIcon={props.loading ? <MdOutlineRestartAlt /> : <MdOutlineAdd />}
     >
-      {props.onlyIcon ? <></> : <> {props.title ?? "Adicionar"}</>}
+      <div style={{ display: "flex", alignItems: "center" }}>
+        {props.onlyIcon ? <></> : <>{props.title ?? "Adicionar"}</>}
+      </div>
     </LoadingButton>
   );
 };
@@ -96,4 +98,3 @@ export const EditButton = (props: ButtonProps) => {
     </LoadingButton>
   );
 };
-

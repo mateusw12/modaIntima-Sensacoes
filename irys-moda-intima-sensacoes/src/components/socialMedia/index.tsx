@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ISocialMedia } from "@/lib/database/models/socialMedia/socialMedia";
 import axios from "axios";
 import { CancelButton, SaveButton } from "@/shared/lib/button";
-import { Col, Form, notification, Row, Table } from "antd";
+import { Col, Form, notification, Row } from "antd";
 import { Input } from "@/shared/lib/input";
 import Modal from "@/shared/lib/modal";
 import { MenuItem } from "@mui/material";
@@ -23,7 +23,6 @@ interface SocialMediaForm {
   path: string;
 }
 
-// Defina o tipo para as linhas da tabela
 interface GridRow {
   id: string;
   key: any;
