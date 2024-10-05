@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ISocialMedia } from "@/lib/database/models/socialMedia/socialMedia";
 import axios from "axios";
-import { AddButton, CancelButton, SaveButton } from "@/shared/lib/button";
+import { CancelButton, SaveButton } from "@/shared/lib/button";
 import { Col, Form, notification, Row, Table } from "antd";
-import { ColumnsType } from "antd/es/table";
 import { Input } from "@/shared/lib/input";
 import Modal from "@/shared/lib/modal";
 import { MenuItem } from "@mui/material";
@@ -11,7 +10,7 @@ import { RecordType } from "@/config/interface/interface";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { Select } from "@/shared/lib/select";
-import DataGrid from "@/shared/lib/dataGrid";
+import DataGrid, { DataGridColumn } from "@/shared/lib/dataGrid";
 
 const fetcher = axios.create({
   baseURL: "/api",
@@ -24,9 +23,10 @@ interface SocialMediaForm {
   path: string;
 }
 
+// Defina o tipo para as linhas da tabela
 interface GridRow {
   id: string;
-  key: string;
+  key: any;
   name: string;
   iconName: string;
   path: string;
@@ -62,13 +62,14 @@ const SocialMedia = () => {
     },
   ];
 
-  const columns: ColumnsType<GridRow> = [
-    { title: "Código", dataIndex: "id", key: "id" },
+  const columns: DataGridColumn[] = [
+    { title: "Código", dataIndex: "id", key: "id", responsive: ["md"] },
     { title: "Nome", dataIndex: "name", key: "name" },
     {
       title: "Ícone",
       dataIndex: "iconName",
       key: "iconName",
+      responsive: ["md"],
       render: (iconName) => {
         const IconComponent = icons.find(
           (icon) => icon.value === iconName
@@ -76,7 +77,7 @@ const SocialMedia = () => {
         return IconComponent ? <IconComponent /> : null;
       },
     },
-    { title: "Path", dataIndex: "path", key: "path" },
+    { title: "Path", dataIndex: "path", key: "path", responsive: ["md"] },
   ];
 
   useEffect(() => {
@@ -145,7 +146,7 @@ const SocialMedia = () => {
         body: JSON.stringify(redeSocial),
       });
     } else {
-      await fetch(`/api/socialMedia/${formValue.id}`, {
+      await fetch(`/api/socialMedia`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -190,18 +191,16 @@ const SocialMedia = () => {
   };
 
   return (
-    <>
-      <div style={{ width: "calc(100vw - 100px)" }}>
-        <DataGrid
-          columns={columns}
-          dataSource={dataSource}
-          showAddButton={true}
-          onAddClick={(id) => loadingModal(id as string | undefined)}
-          showActionButtonsColumn
-          onRemoveClick={(id) => handleRemoveSocialMedia(id as string)}
-          showSearchButton
-        />
-      </div>
+    <div style={{ width: "max-content" }}>
+      <DataGrid
+        columns={columns}
+        dataSource={dataSource}
+        showAddButton={true}
+        onAddClick={(id) => loadingModal(id as string | undefined)}
+        showActionButtonsColumn
+        onRemoveClick={(id) => handleRemoveSocialMedia(id as string)}
+        showSearchButton
+      />
       <Modal
         title="Cadastro de Rede Social"
         open={isModalOpen}
@@ -230,7 +229,7 @@ const SocialMedia = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Por favor, insira o nome do produto",
+                    message: "Por favor, insira o nome",
                   },
                 ]}
               >
@@ -282,7 +281,7 @@ const SocialMedia = () => {
           </Row>
         </Form>
       </Modal>
-    </>
+    </div>
   );
 };
 

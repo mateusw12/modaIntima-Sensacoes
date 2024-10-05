@@ -1,6 +1,7 @@
 import { Db, ObjectId } from "mongodb";
 import clientPromise from "@/lib/database/mongoDb";
 import { ISocialMedia } from "../database/models/socialMedia/socialMedia";
+import { convertObjectId } from "@/util/convertObjectId";
 
 // Obter a conexão com o banco de dados
 const getDb = async (): Promise<Db> => {
@@ -29,14 +30,11 @@ export const create = async (data: ISocialMedia): Promise<void> => {
 
 // Atualizar uma rede social por ID
 export const updateById = async (
-  id: string,
   data: Partial<ISocialMedia>
 ): Promise<void> => {
-  const _id = new ObjectId(id);
+  let _id: ObjectId = convertObjectId(data);
+  data._id = _id;
   const db = await getDb();
-  console.log("data", data)
-  console.log("id", id)
-
   await db.collection("redeSocials").updateOne({ _id }, { $set: data });
 };
 

@@ -25,7 +25,7 @@ const Modal = (props: {
     modalSize,
     footer,
     title,
-    width,
+    width = "80vw", 
     maskClosable,
   } = props;
 
@@ -45,11 +45,10 @@ const Modal = (props: {
       style={{ display: "flex", justifyContent: "center" }}
       styles={{
         body: {
-          width: width,
-          maxHeight: modalSize?.maxHeight,
-          overflowY: modalSize?.overflowY as any,
+          maxHeight: modalSize?.maxHeight || "70vh", 
+          overflowY: "auto",
           overflow: modalSize?.overflow,
-          minHeight: modalSize?.minHeight,
+          minHeight: modalSize?.minHeight || "100px", 
           paddingRight: modalSize?.overflow ? "10px" : undefined,
         },
       }}

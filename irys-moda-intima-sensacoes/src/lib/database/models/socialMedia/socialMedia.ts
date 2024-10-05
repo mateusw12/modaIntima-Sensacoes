@@ -1,5 +1,5 @@
 export interface ISocialMedia {
-  _id?: string;
+  _id?: any;
   nome: string;
   nomeIcone: string;
   path: string;

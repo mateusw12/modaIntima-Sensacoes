@@ -1,14 +1,33 @@
-import { Table, Spin } from "antd";
-import { ColumnsType } from "antd/es/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Paper,
+  CircularProgress,
+} from "@mui/material";
 import { AddButton } from "../button";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
-import { useState } from "react";
 import { Search } from "@mui/icons-material";
+import { ReactNode, useState } from "react";
+import styles from "@/styles/sharedComponents.module.css";
 
-export interface DatGridProps {
-  columns: ColumnsType<any>;
-  dataSource: any[];
+export interface DataGridColumn {
+  title: string;
+  dataIndex: any; 
+  key: string;
+  responsive?: string[];
+  render?: (value: any, record: any) => ReactNode; 
+}
+
+export interface DataGridProps {
+  columns: DataGridColumn[];
+  dataSource: Record<string, any>[]; 
   onAddClick?: (id?: string | number) => void;
   onRemoveClick?: (id?: string | number) => void;
   showAddButton?: boolean;
@@ -17,78 +36,21 @@ export interface DatGridProps {
   loading?: boolean;
 }
 
-const DataGrid = (props: DatGridProps) => {
+const DataGrid = (props: DataGridProps) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredDataSource = props.dataSource.filter((item) =>
-    Object.values(item).some((value: any) =>
-      typeof value === "string"
-        ? value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-        : undefined
+    Object.values(item).some(
+      (value) =>
+        typeof value === "string"
+          ? value.toLowerCase().includes(searchTerm.toLowerCase())
+          : false
     )
   );
 
-  const actionColumn = props.showActionButtonsColumn
-    ? [
-        {
-          title: "Ações",
-          dataIndex: "actions",
-          key: "actions",
-          render: (_: any, record: any) => (
-            <>
-              <IconButton
-                color="primary"
-                onClick={() => props.onAddClick?.(record.id)}
-              >
-                <MdOutlineEdit />
-              </IconButton>
-              <IconButton
-                color="error"
-                onClick={() => props.onRemoveClick?.(record.id)}
-              >
-                <MdOutlineDelete />
-              </IconButton>
-            </>
-          ),
-        },
-      ]
-    : [];
-
-  // Ordena os valores corretamente dependendo do tipo da coluna
-  const enhancedColumns = props.columns.map((column: any) => ({
-    ...column,
-    sorter: (a: any, b: any) => {
-      const valueA = a[column.dataIndex];
-      const valueB = b[column.dataIndex];
-
-      if (typeof valueA === "number" && typeof valueB === "number") {
-        return valueA - valueB;
-      }
-      if (typeof valueA === "string" && typeof valueB === "string") {
-        return valueA.localeCompare(valueB);
-      }
-      return 0;
-    },
-    filters: Array.isArray(props.dataSource)
-      ? Array.from(
-          new Set(props.dataSource.map((item) => item[column.dataIndex]))
-        ).map((value) => ({ text: value, value }))
-      : [],
-    onFilter: (value: any, record: any) => record[column.dataIndex] === value,
-  }));
-
-  const columnsWithActions = [...actionColumn, ...enhancedColumns];
-
   return (
-    <div style={{ width: "100%" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 20,
-        }}
-      >
+    <div className={styles.dataGridContainer}>
+      <div className={styles.dataGridToolbar}>
         {props.showAddButton && (
           <AddButton onClick={() => props.onAddClick?.()} />
         )}
@@ -99,14 +61,12 @@ const DataGrid = (props: DatGridProps) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Pesquise aqui..."
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              },
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search />
+                </InputAdornment>
+              ),
             }}
           />
         )}
@@ -114,15 +74,47 @@ const DataGrid = (props: DatGridProps) => {
 
       {props.loading ? (
         <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
-          <Spin size="large" />
+          <CircularProgress />
+          <span style={{ marginLeft: 10 }}>Carregando...</span>
         </div>
       ) : (
-        <Table
-          columns={columnsWithActions}
-          dataSource={filteredDataSource}
-          style={{ marginTop: 20 }}
-          pagination={false}
-        />
+        <TableContainer component={Paper} style={{ maxWidth: "100vw" }}>
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                {props.showActionButtonsColumn && <TableCell>Ações</TableCell>}
+                {props.columns.map((col) => (
+                  <TableCell key={col.key}>{col.title}</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredDataSource.map((row) => (
+                <TableRow key={row.key}>
+                  {props.showActionButtonsColumn && (
+                    <TableCell>
+                      <IconButton
+                        color="primary"
+                        onClick={() => props.onAddClick?.(row.id)}
+                      >
+                        <MdOutlineEdit />
+                      </IconButton>
+                      <IconButton
+                        color="error"
+                        onClick={() => props.onRemoveClick?.(row.id)}
+                      >
+                        <MdOutlineDelete />
+                      </IconButton>
+                    </TableCell>
+                  )}
+                  {props.columns.map((col) => (
+                    <TableCell key={col.key}>{row[col.dataIndex]}</TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
     </div>
   );

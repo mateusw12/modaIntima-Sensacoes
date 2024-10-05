@@ -44,13 +44,8 @@ export default async function handler(
       }
 
     case "PUT":
-      if (!req.query.id) {
-        return res
-          .status(400)
-          .json({ message: "ID é necessário para atualizar" });
-      }
       try {
-        await updateById(req.query.id as string, req.body);
+        await updateById(req.body);
         return res
           .status(200)
           .json({ message: "Rede social atualizada com sucesso" });
