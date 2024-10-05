@@ -11,6 +11,7 @@ import { RecordType } from "@/config/interface/interface";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { Select } from "@/shared/lib/select";
+import DataGrid from "@/shared/lib/dataGrid";
 
 const fetcher = axios.create({
   baseURL: "/api",
@@ -23,7 +24,8 @@ interface SocialMediaForm {
   path: string;
 }
 
-interface DataGrid {
+interface GridRow {
+  id: string;
   key: string;
   name: string;
   iconName: string;
@@ -32,7 +34,7 @@ interface DataGrid {
 
 const SocialMedia = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [dataSource, setDataSource] = useState<DataGrid[]>([]);
+  const [dataSource, setDataSource] = useState<GridRow[]>([]);
   const [isReload, setIsReload] = useState<boolean>(false);
 
   const [form] = Form.useForm<SocialMediaForm>();
@@ -60,17 +62,35 @@ const SocialMedia = () => {
     },
   ];
 
+  const columns: ColumnsType<GridRow> = [
+    { title: "Código", dataIndex: "id", key: "id" },
+    { title: "Nome", dataIndex: "name", key: "name" },
+    {
+      title: "Ícone",
+      dataIndex: "iconName",
+      key: "iconName",
+      render: (iconName) => {
+        const IconComponent = icons.find(
+          (icon) => icon.value === iconName
+        )?.icon;
+        return IconComponent ? <IconComponent /> : null;
+      },
+    },
+    { title: "Path", dataIndex: "path", key: "path" },
+  ];
+
   useEffect(() => {
     const loadingData = async () => {
       try {
         const response = await fetcher.get("/socialMedia");
-        const data: DataGrid[] = [];
+        const data: GridRow[] = [];
         for (const item of response.data as ISocialMedia[]) {
           data.push({
             iconName: item.nomeIcone,
-            key: item._id?.toString() ?? item.nome,
+            key: item._id ? item._id.toString() : item.nome,
             name: item.nome,
             path: item.path,
+            id: item._id ? item._id.toString() : item.nome,
           });
         }
         setDataSource(data);
@@ -84,15 +104,39 @@ const SocialMedia = () => {
     loadingData();
   }, [isReload]);
 
-  const handleAddProduct = async (values: SocialMediaForm) => {
+  const handleRemoveSocialMedia = async (id: string) => {
+    try {
+      const response = await fetch(`/api/socialMedia`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id }),
+      });
+
+      if (response.ok) {
+        notification.success({
+          message: "Removido com sucesso!",
+        });
+        setIsReload(!isReload);
+      } else {
+        throw new Error("Erro ao deletar a rede social");
+      }
+    } catch (error) {
+      console.error(error);
+      notification.error({ message: "Erro ao remover o item!" });
+    }
+  };
+
+  const handleAddSocialMedia = async (formValue: SocialMediaForm) => {
     const redeSocial: ISocialMedia = {
-      nome: values.name,
-      nomeIcone: values.iconName,
-      path: values.path,
-      _id: values.id,
+      nome: formValue.name,
+      nomeIcone: formValue.iconName,
+      path: formValue.path,
+      _id: formValue.id,
     };
 
-    if (!values.id) {
+    if (!formValue.id) {
       await fetch("/api/socialMedia", {
         method: "POST",
         headers: {
@@ -101,7 +145,7 @@ const SocialMedia = () => {
         body: JSON.stringify(redeSocial),
       });
     } else {
-      await fetch(`/api/socialMedia/${values.id}`, {
+      await fetch(`/api/socialMedia/${formValue.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -114,46 +158,50 @@ const SocialMedia = () => {
     notification.success({
       message: "Salvo com sucesso!",
     });
-    setIsReload(true);
+    setIsReload(!isReload);
   };
-
-  const columns: ColumnsType<DataGrid> = [
-    { title: "Nome", dataIndex: "name", key: "name" },
-    { title: "Ícone", dataIndex: "iconName", key: "iconName" },
-    { title: "Path", dataIndex: "path", key: "path" },
-  ];
 
   const loadingModal = async (id?: string) => {
     if (id) {
       try {
-        const response = await fetch("/api/socialMedia", {
+        const response = await fetch(`/api/socialMedia?cod=${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ id }),
         });
-        const result = await response.json();
-        console.log("result", result);
+        const result = (await response.json()) as ISocialMedia;
+        form.setFieldsValue({
+          iconName: result.nomeIcone,
+          id: result._id,
+          name: result.nome,
+          path: result.path,
+        });
+        setIsModalOpen(true);
       } catch (error) {
+        console.log(error);
         notification.error({
           message: "Não foi possível encontrar o item!",
         });
       }
+    } else {
+      setIsModalOpen(true);
     }
-
-    setIsModalOpen(true);
   };
 
   return (
-    <div>
-      <AddButton onClick={() => loadingModal()} />
-      <Table
-        columns={columns}
-        dataSource={dataSource}
-        style={{ marginTop: 20 }}
-      />
-
+    <>
+      <div style={{ width: "calc(100vw - 100px)" }}>
+        <DataGrid
+          columns={columns}
+          dataSource={dataSource}
+          showAddButton={true}
+          onAddClick={(id) => loadingModal(id as string | undefined)}
+          showActionButtonsColumn
+          onRemoveClick={(id) => handleRemoveSocialMedia(id as string)}
+          showSearchButton
+        />
+      </div>
       <Modal
         title="Cadastro de Rede Social"
         open={isModalOpen}
@@ -169,7 +217,7 @@ const SocialMedia = () => {
           <SaveButton onClick={() => form.submit()} />,
         ]}
       >
-        <Form form={form} onFinish={handleAddProduct} layout="horizontal">
+        <Form form={form} onFinish={handleAddSocialMedia} layout="horizontal">
           <Row>
             <Col span={4}>
               <Form.Item name="id">
@@ -193,7 +241,14 @@ const SocialMedia = () => {
           <Row>
             <Col span={12}>
               <Form.Item name="iconName">
-                <Select label="Ícone" fullWidth>
+                <Select
+                  label="Ícone"
+                  fullWidth
+                  value={form.getFieldValue("iconName")}
+                  onChange={(event) =>
+                    form.setFieldValue("iconName", event.target.value)
+                  }
+                >
                   {icons.map((item) => (
                     <MenuItem
                       key={item.value as string}
@@ -227,7 +282,7 @@ const SocialMedia = () => {
           </Row>
         </Form>
       </Modal>
-    </div>
+    </>
   );
 };
 
