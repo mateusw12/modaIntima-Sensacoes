@@ -24,12 +24,12 @@ interface SideBarProps {
 const SiderBar = (props: SideBarProps) => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  const handleMouseEnter = (category: string) => {
-    setActiveCategory(category);
-  };
-
-  const handleMouseLeave = () => {
-    setActiveCategory(null);
+  const handleActiveCategory = (category: string | null) => {
+    if (category === activeCategory) {
+      setActiveCategory(null);
+    } else {
+      setActiveCategory(category);
+    }
   };
 
   const DrawerHeader = styled("div")(({ theme }) => ({
@@ -41,14 +41,25 @@ const SiderBar = (props: SideBarProps) => {
   }));
 
   return (
-    <Drawer open={props.openSider} onClose={() => props.closeDrawer(false)}>
+    <Drawer
+      open={props.openSider}
+      onClose={() => {
+        props.closeDrawer(false);
+        setActiveCategory(null);
+      }}
+    >
       <Box
         sx={{ width: 250 }}
         role="presentation"
         onClick={(e) => e.stopPropagation()}
       >
         <DrawerHeader>
-          <IconButton onClick={() => props.closeDrawer(false)}>
+          <IconButton
+            onClick={() => {
+              setActiveCategory(null);
+              props.closeDrawer(false);
+            }}
+          >
             <MdClose />
           </IconButton>
         </DrawerHeader>
@@ -75,8 +86,7 @@ const SiderBar = (props: SideBarProps) => {
             <div
               key={category.title}
               className={styles.categoryContainer}
-              onMouseEnter={() => handleMouseEnter(category.title)}
-              onMouseLeave={handleMouseLeave}
+              onClick={() => handleActiveCategory(category.title ?? null)}
             >
               <ListItem disablePadding>
                 <ListItemButton>
@@ -114,8 +124,7 @@ const SiderBar = (props: SideBarProps) => {
             <div
               key={item.title}
               className={styles.categoryContainer}
-              onMouseEnter={() => handleMouseEnter(item.title)}
-              onMouseLeave={handleMouseLeave}
+              onClick={() => handleActiveCategory(item.title)}
             >
               <ListItem disablePadding>
                 <ListItemButton>
