@@ -2,7 +2,7 @@ import styles from "@/styles/policyAndPrivacy.module.css";
 
 const PolicyAndPrivacy = () => {
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.policyContainer}>
         <h1 className={styles.title}>Política de Privacidade</h1>
         <p className={styles.intro}>

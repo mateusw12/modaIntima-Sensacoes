@@ -1,49 +1,54 @@
-.frequentlyContainer {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #333;
-    line-height: 1.6;
-    font-family: 'Arial', sans-serif;
-    text-align: justify;
-    border-top: 6px solid #9b270f;
-    border-left: 2px solid #9b270f;
-    border-right: 2px solid #9b270f;
-    border-bottom: 2px solid #9b270f;
+  .container {
+      display: flex;
+      justify-content: center;
+  }
 
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-}
+  .frequentlyContainer {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #333;
+      line-height: 1.6;
+      font-family: 'Arial', sans-serif;
+      text-align: justify;
+      border-top: 6px solid #9b270f;
+      border-left: 2px solid #9b270f;
+      border-right: 2px solid #9b270f;
+      border-bottom: 2px solid #9b270f;
 
-.title {
-    text-align: center;
-    font-size: 32px;
-    color: #9b270f;
-    margin-bottom: 20px;
-}
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+  }
 
-.text {
-    margin-bottom: 15px;
-    font-size: 16px;
-}
+  .title {
+      text-align: center;
+      font-size: 32px;
+      color: #9b270f;
+      margin-bottom: 20px;
+  }
 
-.accordion {
-    background-color:#F8BACA !important;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+  .text {
+      margin-bottom: 15px;
+      font-size: 16px;
+  }
 
-.accordionSummary {
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #9b270f !important;
-}
+  .accordion {
+      background-color: #F8BACA !important;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-.accordionDetails {
-    font-size: 1rem;
-    color: #555;
-    background-color: #fffaf0 !important;
-    border-radius: 0 0 10px 10px;
-    padding: 15px;
-}
+  .accordionSummary {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #9b270f !important;
+  }
+
+  .accordionDetails {
+      font-size: 1rem;
+      color: #555;
+      background-color: #fffaf0 !important;
+      border-radius: 0 0 10px 10px;
+      padding: 15px;
+  }

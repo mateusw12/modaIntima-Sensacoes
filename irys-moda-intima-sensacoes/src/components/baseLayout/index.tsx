@@ -9,7 +9,7 @@ export const BaseLayout = (props: any) => {
       <Header />
       <Navbar />
       <div className={styles.main}>
-        <div className={styles.content}>{props.children}</div>
+       {props.children}
       </div>
       <Footer />
     </div>

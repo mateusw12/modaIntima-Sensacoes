@@ -2,7 +2,7 @@ import styles from "@/styles/paymentDescription.module.css";
 
 const PaymentDescription = () => {
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.paymentDescriptionContainer}>
         <h1 className={styles.title}>Pagamentos</h1>
         <p className={styles.text}>
@@ -19,7 +19,7 @@ const PaymentDescription = () => {
         </p>
         <p></p>
       </div>
-    </>
+    </div>
   );
 };
 
