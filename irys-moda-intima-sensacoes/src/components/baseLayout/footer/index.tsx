@@ -1,9 +1,51 @@
 import styles from "@/styles/baseLayout.module.css";
 import { MdPhone, MdEmail } from "react-icons/md";
-import { FaInstagram } from "react-icons/fa";
 import CustomLink from "@/shared/lib/link";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { ISocialMedia } from "@/lib/database/models/socialMedia/socialMedia";
+import { IconType } from "react-icons";
+import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
+
+const fetcher = axios.create({
+  baseURL: "/api",
+});
+
+interface SocialMedia {
+  icon?: IconType;
+  path?: string;
+}
 
 const Footer = () => {
+  const [socialMedias, setSocialMedias] = useState<SocialMedia[]>([]);
+
+  const iconMap: Record<string, IconType> = {
+    FaInstagram,
+    FaFacebook,
+    FaTwitter,
+  };
+
+  useEffect(() => {
+    const loadingData = async () => {
+      try {
+        const response = await fetcher.get("/socialMedia");
+        const data: SocialMedia[] = [];
+        for (const item of response.data as ISocialMedia[]) {
+          const Icon = iconMap[item.nomeIcone];
+          data.push({
+            icon: Icon,
+            path: item.path,
+          });
+        }
+        setSocialMedias(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadingData();
+  }, []);
+
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContainer}>
@@ -50,8 +92,20 @@ const Footer = () => {
         <div className={styles.cnpj}>
           <p>CNPJ: 00.000.000/0000-00</p>
         </div>
-
-        <FaInstagram className={styles.instagramIcon} />
+        <div style={{ display: "flex", gap: "10px" }}>
+          {socialMedias.map((socialMedia, index) => {
+            const Icon = socialMedia.icon;
+            return (
+              <CustomLink
+                href={socialMedia.path ?? ""}
+                key={index}
+                isExternal={true}
+              >
+                {Icon && <Icon className={styles.instagramIcon} />}
+              </CustomLink>
+            );
+          })}
+        </div>
       </div>
 
       <p className={styles.copyrightText}>
