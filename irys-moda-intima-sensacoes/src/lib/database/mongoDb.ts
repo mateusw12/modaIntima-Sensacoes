@@ -4,12 +4,6 @@ if (!process.env.NEXT_PUBLIC_MONGO_URI) {
   throw new Error('Invalid/Missing environment variable: "MONGO_URI"');
 }
 
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  ssl: true, // Certifique-se de que SSL/TLS está habilitado
-};
-
 const uri = process.env.NEXT_PUBLIC_MONGO_URI;
 
 let client: MongoClient;
@@ -21,12 +15,12 @@ if (process.env.NODE_ENV === "development") {
   };
 
   if (!globalWithMongo._mongoClientPromise) {
-    client = new MongoClient(uri, options);
+    client = new MongoClient(uri);
     globalWithMongo._mongoClientPromise = client.connect();
   }
   clientPromise = globalWithMongo._mongoClientPromise;
 } else {
-  client = new MongoClient(uri, options);
+  client = new MongoClient(uri);
   clientPromise = client.connect();
 }
 
