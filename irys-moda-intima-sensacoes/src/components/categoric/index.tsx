@@ -153,7 +153,7 @@ const Categoric = () => {
         />
 
         <Modal
-          title="Cadastro de Rede Social"
+          title="Cadastro de Categoria de Produto"
           open={isModalOpen}
           onCancel={() => setIsModalOpen(false)}
           width={600}
