@@ -41,7 +41,7 @@ export const MANAGEMENT_ITEMS: IMenuItems[] = [
     subCategories: [
       { title: "Produto", disabled: true },
       { title: "Categoria", path: "categoria" },
-      { title: "Método de Pagamento", disabled: true },
+      { title: "Método de Pagamento", path: "metodo-pagamento" },
       { title: "Oferta", disabled: true },
       { title: "Rede Social", path: "rede-social" },
     ],
