@@ -73,6 +73,13 @@ const DataGrid = (props: DataGridProps) => {
     setSortColumn(columnKey);
   };
 
+  function renderBoolCol(
+    row: Record<string, any>,
+    col: DataGridColumn
+  ): ReactNode {
+    return row[col.dataIndex] ? "Sim" : "Não";
+  }
+
   return (
     <div className={styles.dataGridContainer}>
       <div className={styles.dataGridToolbar}>
@@ -112,7 +119,11 @@ const DataGrid = (props: DataGridProps) => {
                   <TableCell key={col.key} onClick={() => handleSort(col.key)}>
                     {col.title}
                     {sortColumn === col.key &&
-                      (sortDirection === "asc" ? <MdArrowUpward /> : <MdArrowDownward />)}
+                      (sortDirection === "asc" ? (
+                        <MdArrowUpward />
+                      ) : (
+                        <MdArrowDownward />
+                      ))}
                   </TableCell>
                 ))}
               </TableRow>
@@ -137,7 +148,13 @@ const DataGrid = (props: DataGridProps) => {
                     </TableCell>
                   )}
                   {props.columns.map((col) => (
-                    <TableCell key={col.key}>{row[col.dataIndex]}</TableCell>
+                    <TableCell key={col.key}>
+                      {col.render
+                        ? col.render(row[col.dataIndex], row)
+                        : typeof row[col.dataIndex] === "boolean"
+                          ? renderBoolCol(row, col)
+                          : row[col.dataIndex]}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))}
