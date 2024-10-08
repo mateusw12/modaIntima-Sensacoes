@@ -13,6 +13,8 @@ const Modal = (props: {
     overflowY?: string;
     minHeight?: string;
     overflow?: string;
+    minWidth?: string;
+    maxWidth?: string;
   };
   children: React.ReactNode;
   footer: React.ReactNode;
@@ -50,6 +52,8 @@ const Modal = (props: {
           overflow: modalSize?.overflow,
           minHeight: modalSize?.minHeight || "100px", 
           paddingRight: modalSize?.overflow ? "10px" : undefined,
+          minWidth: modalSize?.minWidth || "80vw",
+          maxWidth: modalSize?.maxWidth || "80vw"
         },
       }}
     >

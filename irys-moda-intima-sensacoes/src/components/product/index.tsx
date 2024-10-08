@@ -1,4 +1,4 @@
-import { ICategoric } from "@/lib/database/models/categoric/categoric";
+import { IProduct } from "@/lib/database/models/product/product";
 import { CancelButton, SaveButton } from "@/shared/lib/button";
 import DataGrid, { DataGridColumn } from "@/shared/lib/dataGrid";
 import { Input } from "@/shared/lib/input";
@@ -11,39 +11,55 @@ const fetcher = axios.create({
   baseURL: "/api",
 });
 
-interface CategoricForm {
+interface ProductForm {
   id: string;
   name: string;
+  description: string;
+  color: string;
+  price: number;
+  registrationDate: Date;
+  codCategoria: any;
+  size: string[];
+  image: { name: string; byte: string }[];
 }
 
 interface GridRow {
   id: string;
   key: any;
   name: string;
+  price: number;
+  categoric: string;
+  size: string;
 }
 
-const Categoric = () => {
+const Product = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [dataSource, setDataSource] = useState<GridRow[]>([]);
   const [isReload, setIsReload] = useState<boolean>(false);
 
-  const [form] = Form.useForm<CategoricForm>();
+  const [form] = Form.useForm<ProductForm>();
 
   const columns: DataGridColumn[] = [
     { title: "Código", dataIndex: "id", key: "id" },
     { title: "Nome", dataIndex: "name", key: "name" },
+    { title: "Categoria", dataIndex: "categoric", key: "categoric" },
+    { title: "Tamanho", dataIndex: "size", key: "size" },
+    { title: "Preço", dataIndex: "price", key: "price" },
   ];
 
   useEffect(() => {
     const loadingData = async () => {
       try {
-        const response = await fetcher.get("/categoric");
+        const response = await fetcher.get("/product");
         const data: GridRow[] = [];
-        for (const item of response.data as ICategoric[]) {
+        for (const item of response.data as IProduct[]) {
           data.push({
             key: item._id ? item._id.toString() : item.nome,
             name: item.nome,
             id: item._id ? item._id.toString() : item.nome,
+            categoric: item.codCategoria,
+            price: item.preco,
+            size: item.tamanho.map((el) => el.toString()).join(","),
           });
         }
         setDataSource(data);
@@ -57,9 +73,9 @@ const Categoric = () => {
     loadingData();
   }, [isReload]);
 
-  const handleRemoveCategoric = async (id: string) => {
+  const handleRemoveProduct = async (id: string) => {
     try {
-      const response = await fetch(`/api/categoric`, {
+      const response = await fetch(`/api/product`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +89,7 @@ const Categoric = () => {
         });
         setIsReload(!isReload);
       } else {
-        throw new Error("Erro ao deletar a categoria");
+        throw new Error("Erro ao deletar o produto");
       }
     } catch (error) {
       console.error(error);
@@ -81,29 +97,35 @@ const Categoric = () => {
     }
   };
 
-  const handleAddSocialMedia = async (formValue: CategoricForm) => {
-    const categoric: ICategoric = {
+  const handleAddProduct = async (formValue: ProductForm) => {
+    const product: IProduct = {
       nome: formValue.name,
       _id: formValue.id,
+      codCategoria: formValue.codCategoria,
+      cor: formValue.color,
+      dataCadastro: new Date(),
+      descricao: formValue.description,
+      preco: formValue.price,
+      tamanho: formValue.size
     };
 
     if (!formValue.id) {
-      await fetch("/api/categoric", {
+      await fetch("/api/product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(categoric),
+        body: JSON.stringify(product),
       });
     } else {
-      await fetch(`/api/categoric`, {
+      await fetch(`/api/product`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(categoric),
+        body: JSON.stringify(product),
       });
-      categoric;
+      product;
     }
 
     form.resetFields();
@@ -116,13 +138,13 @@ const Categoric = () => {
   const loadingModal = async (id?: string) => {
     if (id) {
       try {
-        const response = await fetch(`/api/categoric?cod=${id}`, {
+        const response = await fetch(`/api/product?cod=${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
         });
-        const result = (await response.json()) as ICategoric;
+        const result = (await response.json()) as IProduct;
         form.setFieldsValue({
           id: result._id,
           name: result.nome,
@@ -148,15 +170,14 @@ const Categoric = () => {
           showAddButton={true}
           onAddClick={(id) => loadingModal(id as string | undefined)}
           showActionButtonsColumn
-          onRemoveClick={(id) => handleRemoveCategoric(id as string)}
+          onRemoveClick={(id) => handleRemoveProduct(id as string)}
           showSearchButton
         />
 
         <Modal
-          title="Cadastro de Categoria de Produto"
+          title="Cadastro de Produto"
           open={isModalOpen}
           onCancel={() => setIsModalOpen(false)}
-          width={600}
           footer={[
             <CancelButton
               key={"cancel"}
@@ -168,7 +189,7 @@ const Categoric = () => {
             <SaveButton key={"save"} onClick={() => form.submit()} />,
           ]}
         >
-          <Form form={form} onFinish={handleAddSocialMedia} layout="horizontal">
+          <Form form={form} onFinish={handleAddProduct} layout="horizontal">
             <Row>
               <Col span={4}>
                 <Form.Item name="id">
@@ -196,4 +217,4 @@ const Categoric = () => {
   );
 };
 
-export default Categoric;
+export default Product;
