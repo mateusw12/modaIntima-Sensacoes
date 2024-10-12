@@ -5,6 +5,8 @@ export interface SelectProps {
   fullWidth?: boolean;
   value?: any;
   onChange?: (event: any) => void;
+  multiple?: boolean;
+  disabled?: boolean;
 }
 
 export const Select = (props: SelectProps) => {
@@ -16,6 +18,8 @@ export const Select = (props: SelectProps) => {
         fullWidth={props.fullWidth}
         value={props.value}
         onChange={props.onChange}
+        multiple={props.multiple}
+        disabled={props.disabled}
         sx={{
           padding: "6px 14px",
           height: "45px",

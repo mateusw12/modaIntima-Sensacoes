@@ -20,6 +20,7 @@ export const Input = (props: InputProps) => {
         style={props.style}
         multiline={props.multiline}
         maxRows={props.maxRows}
+        rows={props.maxRows}
         size="small"
         slotProps={{
           input: {

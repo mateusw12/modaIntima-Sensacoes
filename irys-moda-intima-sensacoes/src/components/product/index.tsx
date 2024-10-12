@@ -1,8 +1,14 @@
+import { SIZE_ITEMS } from "@/config/constant/constant";
+import { RecordType } from "@/config/interface/interface";
+import { ICategoric } from "@/lib/database/models/categoric/categoric";
 import { IProduct } from "@/lib/database/models/product/product";
 import { CancelButton, SaveButton } from "@/shared/lib/button";
 import DataGrid, { DataGridColumn } from "@/shared/lib/dataGrid";
 import { Input } from "@/shared/lib/input";
 import Modal from "@/shared/lib/modal";
+import { Select } from "@/shared/lib/select";
+import { convertToBase64 } from "@/util/convertBase64";
+import { MenuItem } from "@mui/material";
 import { Col, Form, notification, Row } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -36,6 +42,8 @@ const Product = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [dataSource, setDataSource] = useState<GridRow[]>([]);
   const [isReload, setIsReload] = useState<boolean>(false);
+  const [categories, setCategories] = useState<RecordType[]>([]);
+  const [fileList, setFileList] = useState<{ name: string; byte: string }[]>([]); // Estado para armazenar arquivos
 
   const [form] = Form.useForm<ProductForm>();
 
@@ -51,6 +59,12 @@ const Product = () => {
     const loadingData = async () => {
       try {
         const response = await fetcher.get("/product");
+        const categories = await fetcher.get("/categoric");
+        setCategories(
+          (categories.data as ICategoric[]).map((el) => {
+            return { label: el.nome, value: el._id };
+          })
+        );
         const data: GridRow[] = [];
         for (const item of response.data as IProduct[]) {
           data.push({
@@ -106,7 +120,7 @@ const Product = () => {
       dataCadastro: new Date(),
       descricao: formValue.description,
       preco: formValue.price,
-      tamanho: formValue.size
+      tamanho: formValue.size,
     };
 
     if (!formValue.id) {
@@ -161,6 +175,18 @@ const Product = () => {
     }
   };
 
+  // Função para converter arquivos para base64
+  const handleFileUpload = async (files: FileList) => {
+    const filesArray: { name: string; byte: string }[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const byteArray = await convertToBase64(file);
+      filesArray.push({ name: file.name, byte: byteArray });
+    }
+    setFileList(filesArray);
+    form.setFieldValue("image", filesArray); // Define no form os arquivos em base64
+  };
+
   return (
     <>
       <div style={{ width: "max-content" }}>
@@ -207,6 +233,94 @@ const Product = () => {
                   ]}
                 >
                   <Input fullWidth label="Nome" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Form.Item name="description">
+                  <Input label="Descrição" fullWidth maxRows={2} multiline />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>
+                <Form.Item name="codCategoria">
+                  <Select
+                    label="Categoria"
+                    fullWidth
+                    value={form.getFieldValue("codCategoria")}
+                    onChange={(event) =>
+                      form.setFieldValue("codCategoria", event.target.value)
+                    }
+                  >
+                    {categories.map((item) => (
+                      <MenuItem
+                        key={item.value as string}
+                        value={item.value as string}
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        {item.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col offset={1} span={11}>
+                <Form.Item name="size">
+                  <Select
+                    label="Tamanho"
+                    fullWidth
+                    // multiple={true}
+                    value={form.getFieldValue("size")}
+                    onChange={(event) =>
+                      form.setFieldValue("size", event.target.value)
+                    }
+                  >
+                    {SIZE_ITEMS.map((item) => (
+                      <MenuItem
+                        key={item.value as string}
+                        value={item.value as string}
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        {item.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={16}>
+                <Form.Item name="color">
+                  <Input
+                    label="Cor"
+                    placeholder="Ex: #FFFFFF, red"
+                    fullWidth
+                    maxRows={2}
+                    multiline
+                  />
+                </Form.Item>
+              </Col>
+              <Col offset={1} span={7}>
+                <Form.Item name="price">
+                  <Input type="number" label="Preço" fullWidth />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Form.Item
+                  name="image"
+                  valuePropName="fileList"
+                  getValueFromEvent={(e) => e?.target?.files}
+                >
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => handleFileUpload(e.target.files!)}
+                  />
                 </Form.Item>
               </Col>
             </Row>
