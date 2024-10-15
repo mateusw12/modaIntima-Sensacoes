@@ -1,8 +1,18 @@
-import { IProduct } from "@/lib/database/models/product/product";
+"use client";
+
+import { SIZE_ITEMS } from "@/config/constant/constant";
+import { RecordType } from "@/config/interface/interface";
+import { ICategoric } from "@/lib/database/models/categoric/categoric";
+import { IProduct, IProductImage } from "@/lib/database/models/product/product";
 import { CancelButton, SaveButton } from "@/shared/lib/button";
 import DataGrid, { DataGridColumn } from "@/shared/lib/dataGrid";
 import { Input } from "@/shared/lib/input";
 import Modal from "@/shared/lib/modal";
+import { Multiselect } from "@/shared/lib/multiselect";
+import { Select } from "@/shared/lib/select";
+import { Upload } from "@/shared/lib/upload";
+import { convertToBase64 } from "@/util/convertBase64";
+import { MenuItem } from "@mui/material";
 import { Col, Form, notification, Row } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -19,7 +29,7 @@ interface ProductForm {
   price: number;
   registrationDate: Date;
   codCategoria: any;
-  size: string[];
+  size: any;
   image: { name: string; byte: string }[];
 }
 
@@ -36,6 +46,10 @@ const Product = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [dataSource, setDataSource] = useState<GridRow[]>([]);
   const [isReload, setIsReload] = useState<boolean>(false);
+  const [categories, setCategories] = useState<RecordType[]>([]);
+  const [fileList, setFileList] = useState<{ name: string; byte: string }[]>(
+    []
+  ); // Estado para armazenar arquivos
 
   const [form] = Form.useForm<ProductForm>();
 
@@ -50,7 +64,13 @@ const Product = () => {
   useEffect(() => {
     const loadingData = async () => {
       try {
+        const categories = await fetcher.get("/categoric");
         const response = await fetcher.get("/product");
+        setCategories(
+          (categories.data as ICategoric[]).map((el) => {
+            return { label: el.nome, value: el._id };
+          })
+        );
         const data: GridRow[] = [];
         for (const item of response.data as IProduct[]) {
           data.push({
@@ -59,7 +79,7 @@ const Product = () => {
             id: item._id ? item._id.toString() : item.nome,
             categoric: item.codCategoria,
             price: item.preco,
-            size: item.tamanho.map((el) => el.toString()).join(","),
+            size: item.tamanho,
           });
         }
         setDataSource(data);
@@ -83,7 +103,15 @@ const Product = () => {
         body: JSON.stringify({ id: id }),
       });
 
-      if (response.ok) {
+      const responseImages = await fetch(`/api/product/images`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id }),
+      });
+
+      if (response.ok && responseImages.ok) {
         notification.success({
           message: "Removido com sucesso!",
         });
@@ -106,7 +134,15 @@ const Product = () => {
       dataCadastro: new Date(),
       descricao: formValue.description,
       preco: formValue.price,
-      tamanho: formValue.size
+      tamanho: formValue.size.join(","),
+    };
+
+    const prouctImages: IProductImage = {
+      codProduto: formValue.id,
+      _id: formValue.id,
+      imagens: formValue.image.map((image) => {
+        return { byte: image.byte, nome: image.name };
+      }),
     };
 
     if (!formValue.id) {
@@ -117,6 +153,13 @@ const Product = () => {
         },
         body: JSON.stringify(product),
       });
+      await fetch("/api/product/images", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(prouctImages),
+      });
     } else {
       await fetch(`/api/product`, {
         method: "PUT",
@@ -125,7 +168,13 @@ const Product = () => {
         },
         body: JSON.stringify(product),
       });
-      product;
+      await fetch(`/api/product/images`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(prouctImages),
+      });
     }
 
     form.resetFields();
@@ -144,10 +193,25 @@ const Product = () => {
             "Content-Type": "application/json",
           },
         });
+        const responseImages = await fetch(`/api/product/images?cod=${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
         const result = (await response.json()) as IProduct;
+        const resultImage = (await responseImages.json()) as IProductImage;
         form.setFieldsValue({
           id: result._id,
           name: result.nome,
+          codCategoria: result.codCategoria,
+          color: result.cor,
+          description: result.descricao,
+          image: resultImage.imagens,
+          price: result.preco,
+          registrationDate: new Date(),
+          size: result.tamanho,
         });
         setIsModalOpen(true);
       } catch (error) {
@@ -159,6 +223,18 @@ const Product = () => {
     } else {
       setIsModalOpen(true);
     }
+  };
+
+  // Função para converter arquivos para base64
+  const handleFileUpload = async (files: FileList) => {
+    const filesArray: { name: string; byte: string }[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const byteArray = await convertToBase64(file);
+      filesArray.push({ name: file.name, byte: byteArray });
+    }
+    setFileList(filesArray);
+    form.setFieldValue("image", filesArray);
   };
 
   return (
@@ -207,6 +283,91 @@ const Product = () => {
                   ]}
                 >
                   <Input fullWidth label="Nome" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Form.Item name="description">
+                  <Input label="Descrição" fullWidth maxRows={2} multiline />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>
+                <Form.Item name="codCategoria">
+                  <Select
+                    label="Categoria"
+                    fullWidth
+                    value={form.getFieldValue("codCategoria")}
+                    onChange={(event) =>
+                      form.setFieldValue("codCategoria", event.target.value)
+                    }
+                  >
+                    {categories.map((item) => (
+                      <MenuItem
+                        key={item.value as string}
+                        value={item.value as string}
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        {item.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col offset={1} span={11}>
+                <Form.Item name="size">
+                  <Multiselect
+                    label="Tamanho"
+                    fullWidth
+                    value={form.getFieldValue("size")}
+                    onChange={(event) =>
+                      form.setFieldValue("size", event.target.value)
+                    }
+                  >
+                    {SIZE_ITEMS.map((item) => (
+                      <MenuItem
+                        key={item.value as string}
+                        value={item.value as string}
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        {item.label}
+                      </MenuItem>
+                    ))}
+                  </Multiselect>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={16}>
+                <Form.Item name="color">
+                  <Input
+                    label="Cor"
+                    placeholder="Ex: #FFFFFF, red"
+                    fullWidth
+                    maxRows={2}
+                    multiline
+                  />
+                </Form.Item>
+              </Col>
+              <Col offset={1} span={7}>
+                <Form.Item name="price">
+                  <Input type="number" label="Preço" fullWidth />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Form.Item
+                  name="image"
+                  valuePropName="fileList"
+                  getValueFromEvent={(e) => e?.target?.files}
+                >
+                  <Upload
+                    multiple
+                    onChange={(e) => handleFileUpload(e.target.files!)}
+                  />
                 </Form.Item>
               </Col>
             </Row>
