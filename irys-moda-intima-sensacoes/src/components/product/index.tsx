@@ -47,9 +47,6 @@ const Product = () => {
   const [dataSource, setDataSource] = useState<GridRow[]>([]);
   const [isReload, setIsReload] = useState<boolean>(false);
   const [categories, setCategories] = useState<RecordType[]>([]);
-  const [fileList, setFileList] = useState<{ name: string; byte: string }[]>(
-    []
-  ); // Estado para armazenar arquivos
 
   const [form] = Form.useForm<ProductForm>();
 
@@ -225,7 +222,6 @@ const Product = () => {
     }
   };
 
-  // Função para converter arquivos para base64
   const handleFileUpload = async (files: FileList) => {
     const filesArray: { name: string; byte: string }[] = [];
     for (let i = 0; i < files.length; i++) {
@@ -233,7 +229,6 @@ const Product = () => {
       const byteArray = await convertToBase64(file);
       filesArray.push({ name: file.name, byte: byteArray });
     }
-    setFileList(filesArray);
     form.setFieldValue("image", filesArray);
   };
 
