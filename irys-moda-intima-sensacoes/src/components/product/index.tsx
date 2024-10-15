@@ -1,12 +1,16 @@
+"use client";
+
 import { SIZE_ITEMS } from "@/config/constant/constant";
 import { RecordType } from "@/config/interface/interface";
 import { ICategoric } from "@/lib/database/models/categoric/categoric";
-import { IProduct } from "@/lib/database/models/product/product";
+import { IProduct, IProductImage } from "@/lib/database/models/product/product";
 import { CancelButton, SaveButton } from "@/shared/lib/button";
 import DataGrid, { DataGridColumn } from "@/shared/lib/dataGrid";
 import { Input } from "@/shared/lib/input";
 import Modal from "@/shared/lib/modal";
+import { Multiselect } from "@/shared/lib/multiselect";
 import { Select } from "@/shared/lib/select";
+import { Upload } from "@/shared/lib/upload";
 import { convertToBase64 } from "@/util/convertBase64";
 import { MenuItem } from "@mui/material";
 import { Col, Form, notification, Row } from "antd";
@@ -25,7 +29,7 @@ interface ProductForm {
   price: number;
   registrationDate: Date;
   codCategoria: any;
-  size: string[];
+  size: any;
   image: { name: string; byte: string }[];
 }
 
@@ -43,7 +47,9 @@ const Product = () => {
   const [dataSource, setDataSource] = useState<GridRow[]>([]);
   const [isReload, setIsReload] = useState<boolean>(false);
   const [categories, setCategories] = useState<RecordType[]>([]);
-  const [fileList, setFileList] = useState<{ name: string; byte: string }[]>([]); // Estado para armazenar arquivos
+  const [fileList, setFileList] = useState<{ name: string; byte: string }[]>(
+    []
+  ); // Estado para armazenar arquivos
 
   const [form] = Form.useForm<ProductForm>();
 
@@ -58,8 +64,8 @@ const Product = () => {
   useEffect(() => {
     const loadingData = async () => {
       try {
-        const response = await fetcher.get("/product");
         const categories = await fetcher.get("/categoric");
+        const response = await fetcher.get("/product");
         setCategories(
           (categories.data as ICategoric[]).map((el) => {
             return { label: el.nome, value: el._id };
@@ -73,7 +79,7 @@ const Product = () => {
             id: item._id ? item._id.toString() : item.nome,
             categoric: item.codCategoria,
             price: item.preco,
-            size: item.tamanho.map((el) => el.toString()).join(","),
+            size: item.tamanho,
           });
         }
         setDataSource(data);
@@ -97,7 +103,15 @@ const Product = () => {
         body: JSON.stringify({ id: id }),
       });
 
-      if (response.ok) {
+      const responseImages = await fetch(`/api/product/images`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id }),
+      });
+
+      if (response.ok && responseImages.ok) {
         notification.success({
           message: "Removido com sucesso!",
         });
@@ -120,7 +134,15 @@ const Product = () => {
       dataCadastro: new Date(),
       descricao: formValue.description,
       preco: formValue.price,
-      tamanho: formValue.size,
+      tamanho: formValue.size.join(","),
+    };
+
+    const prouctImages: IProductImage = {
+      codProduto: formValue.id,
+      _id: formValue.id,
+      imagens: formValue.image.map((image) => {
+        return { byte: image.byte, nome: image.name };
+      }),
     };
 
     if (!formValue.id) {
@@ -131,6 +153,13 @@ const Product = () => {
         },
         body: JSON.stringify(product),
       });
+      await fetch("/api/product/images", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(prouctImages),
+      });
     } else {
       await fetch(`/api/product`, {
         method: "PUT",
@@ -139,7 +168,13 @@ const Product = () => {
         },
         body: JSON.stringify(product),
       });
-      product;
+      await fetch(`/api/product/images`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(prouctImages),
+      });
     }
 
     form.resetFields();
@@ -158,10 +193,25 @@ const Product = () => {
             "Content-Type": "application/json",
           },
         });
+        const responseImages = await fetch(`/api/product/images?cod=${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
         const result = (await response.json()) as IProduct;
+        const resultImage = (await responseImages.json()) as IProductImage;
         form.setFieldsValue({
           id: result._id,
           name: result.nome,
+          codCategoria: result.codCategoria,
+          color: result.cor,
+          description: result.descricao,
+          image: resultImage.imagens,
+          price: result.preco,
+          registrationDate: new Date(),
+          size: result.tamanho,
         });
         setIsModalOpen(true);
       } catch (error) {
@@ -184,7 +234,7 @@ const Product = () => {
       filesArray.push({ name: file.name, byte: byteArray });
     }
     setFileList(filesArray);
-    form.setFieldValue("image", filesArray); // Define no form os arquivos em base64
+    form.setFieldValue("image", filesArray);
   };
 
   return (
@@ -268,10 +318,9 @@ const Product = () => {
               </Col>
               <Col offset={1} span={11}>
                 <Form.Item name="size">
-                  <Select
+                  <Multiselect
                     label="Tamanho"
                     fullWidth
-                    // multiple={true}
                     value={form.getFieldValue("size")}
                     onChange={(event) =>
                       form.setFieldValue("size", event.target.value)
@@ -286,7 +335,7 @@ const Product = () => {
                         {item.label}
                       </MenuItem>
                     ))}
-                  </Select>
+                  </Multiselect>
                 </Form.Item>
               </Col>
             </Row>
@@ -315,10 +364,8 @@ const Product = () => {
                   valuePropName="fileList"
                   getValueFromEvent={(e) => e?.target?.files}
                 >
-                  <input
-                    type="file"
+                  <Upload
                     multiple
-                    accept="image/*"
                     onChange={(e) => handleFileUpload(e.target.files!)}
                   />
                 </Form.Item>

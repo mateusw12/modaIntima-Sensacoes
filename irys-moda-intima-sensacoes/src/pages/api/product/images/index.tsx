@@ -5,7 +5,7 @@ import {
   create,
   updateById,
   deleteById,
-} from "@/lib/repositories/productRepository";
+} from "@/lib/repositories/productImageRepository";
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,13 +17,13 @@ export default async function handler(
       const { cod } = req.query;
       if (cod) {
         // Buscar Produto por ID
-        const product = await findById(cod as string);
-        if (!product) {
+        const productImage = await findById(cod as string);
+        if (!productImage) {
           return res
             .status(404)
-            .json({ message: "Produto não encontrada" });
+            .json({ message: "Imagem do poduto não encontrada" });
         }
-        return res.status(200).json(product);
+        return res.status(200).json(productImage);
       } else {
         // Buscar todas as redes sociais
         const products = await findAll();
@@ -36,11 +36,11 @@ export default async function handler(
         await create(newProduct);
         return res
           .status(201)
-          .json({ message: "Produto criada com sucesso" });
+          .json({ message: "Imagem do poduto criada com sucesso" });
       } catch (error) {
         return res
           .status(400)
-          .json({ message: "Erro ao criar a Produto", error });
+          .json({ message: "Erro ao criar a imagem do poduto", error });
       }
 
     case "PUT":
@@ -48,11 +48,11 @@ export default async function handler(
         await updateById(req.body);
         return res
           .status(200)
-          .json({ message: "Produto atualizada com sucesso" });
+          .json({ message: "Imagem do poduto atualizada com sucesso" });
       } catch (error) {
         return res
           .status(400)
-          .json({ message: "Erro ao atualizar a Produto", error });
+          .json({ message: "Erro ao atualizar a imagem do poduto", error });
       }
 
     case "DELETE":

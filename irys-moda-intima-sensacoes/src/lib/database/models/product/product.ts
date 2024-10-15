@@ -17,5 +17,5 @@ export interface IProduct {
   preco: number;
   dataCadastro: Date;
   codCategoria: any;
-  tamanho: string[];
+  tamanho: string;
 }

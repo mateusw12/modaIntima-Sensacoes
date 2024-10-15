@@ -1,27 +1,32 @@
+import {
+  InputLabel,
+  Select as MaterialSelect,
+  SelectChangeEvent,
+} from "@mui/material";
 import React from "react";
-import { InputLabel, Select as MaterialSelect, SelectChangeEvent } from "@mui/material";
 export interface SelectProps {
   label?: string;
   children: any;
   fullWidth?: boolean;
-  value?: any;
+  value?: string[] | [];
   onChange?: (event: SelectChangeEvent) => void;
   disabled?: boolean;
 }
 
-export const Select = (props: SelectProps) => {
+export const Multiselect = (props: SelectProps) => {
   return (
     <>
       <InputLabel id={props.label}>{props.label}</InputLabel>
       <MaterialSelect
+        labelId={props.label}
         label={props.label}
         id={props.label}
-        placeholder={props.label}
+        multiple
         variant="standard"
         fullWidth={props.fullWidth}
-        value={props.value}
         onChange={props.onChange}
         disabled={props.disabled}
+        value={(props.value as string[]) || []}
         sx={{
           padding: "6px 14px",
           height: "45px",
