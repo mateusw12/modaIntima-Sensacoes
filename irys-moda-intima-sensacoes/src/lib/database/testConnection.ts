@@ -6,7 +6,7 @@ export async function testDatabaseConnection() {
   try {
     const client = await clientPromise; // Usa o client já conectado
     await client.db("irysmodaintima").command({ ping: 1 }); // Testa a conexão ao banco de dados
-    console.log(
+    console.info(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
     isConnected = true;
