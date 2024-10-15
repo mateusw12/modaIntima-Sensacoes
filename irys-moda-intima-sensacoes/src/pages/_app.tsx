@@ -1,5 +1,5 @@
 import BaseLayout from "@/components/baseLayout";
-import Spinner from "@/shared/lib/spinner";
+import Spinner from "@/shared/spinner";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";

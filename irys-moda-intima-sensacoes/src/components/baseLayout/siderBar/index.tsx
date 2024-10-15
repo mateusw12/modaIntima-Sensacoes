@@ -14,7 +14,7 @@ import { CATEGORIES, MANAGEMENT_ITEMS } from "@/config/constant/menuConstant";
 import { MdClose } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { useState } from "react";
-import CustomLink from "@/shared/lib/link";
+import CustomLink from "@/shared/link";
 
 interface SideBarProps {
   openSider: boolean;

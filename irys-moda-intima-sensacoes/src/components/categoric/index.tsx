@@ -1,8 +1,8 @@
 import { ICategoric } from "@/lib/database/models/categoric/categoric";
-import { CancelButton, SaveButton } from "@/shared/lib/button";
-import DataGrid, { DataGridColumn } from "@/shared/lib/dataGrid";
-import { Input } from "@/shared/lib/input";
-import Modal from "@/shared/lib/modal";
+import { CancelButton, SaveButton } from "@/shared/button";
+import DataGrid, { DataGridColumn } from "@/shared/dataGrid";
+import { Input } from "@/shared/input";
+import Modal from "@/shared/modal";
 import { Col, Form, notification, Row } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";

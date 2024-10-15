@@ -26,7 +26,6 @@ export const Multiselect = (props: SelectProps) => {
         fullWidth={props.fullWidth}
         onChange={props.onChange}
         disabled={props.disabled}
-        value={(props.value as string[]) || []}
         sx={{
           padding: "6px 14px",
           height: "45px",

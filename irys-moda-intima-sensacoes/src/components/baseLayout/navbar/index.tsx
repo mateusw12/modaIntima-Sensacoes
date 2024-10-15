@@ -8,7 +8,7 @@ import {
   MdSearch,
 } from "react-icons/md";
 import Image from "next/image";
-import CustomLink from "@/shared/lib/link";
+import CustomLink from "@/shared/link";
 import SiderBar from "../siderBar";
 
 const Navbar = () => {

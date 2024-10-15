@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { ISocialMedia } from "@/lib/database/models/socialMedia/socialMedia";
 import axios from "axios";
-import { CancelButton, SaveButton } from "@/shared/lib/button";
+import { CancelButton, SaveButton } from "@/shared/button";
 import { Col, Form, notification, Row } from "antd";
-import { Input } from "@/shared/lib/input";
-import Modal from "@/shared/lib/modal";
+import { Input } from "@/shared/input";
+import Modal from "@/shared/modal";
 import { MenuItem } from "@mui/material";
 import { RecordType } from "@/config/interface/interface";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { IconType } from "react-icons";
-import { Select } from "@/shared/lib/select";
-import DataGrid, { DataGridColumn } from "@/shared/lib/dataGrid";
+import { Select } from "@/shared/select";
+import DataGrid, { DataGridColumn } from "@/shared/dataGrid";
 
 const fetcher = axios.create({
   baseURL: "/api",

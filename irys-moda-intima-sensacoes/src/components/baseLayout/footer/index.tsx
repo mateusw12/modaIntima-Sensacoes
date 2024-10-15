@@ -1,6 +1,6 @@
 import styles from "@/styles/baseLayout.module.css";
 import { MdPhone, MdEmail } from "react-icons/md";
-import CustomLink from "@/shared/lib/link";
+import CustomLink from "@/shared/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ISocialMedia } from "@/lib/database/models/socialMedia/socialMedia";
