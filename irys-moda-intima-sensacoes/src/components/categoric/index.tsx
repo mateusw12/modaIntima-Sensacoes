@@ -57,7 +57,7 @@ const Categoric = () => {
     loadingData();
   }, [isReload]);
 
-  const handleRemoveSocialMedia = async (id: string) => {
+  const handleRemoveCategoric = async (id: string) => {
     try {
       const response = await fetch(`/api/categoric`, {
         method: "DELETE",
@@ -73,7 +73,7 @@ const Categoric = () => {
         });
         setIsReload(!isReload);
       } else {
-        throw new Error("Erro ao deletar a rede social");
+        throw new Error("Erro ao deletar a categoria");
       }
     } catch (error) {
       console.error(error);
@@ -96,7 +96,7 @@ const Categoric = () => {
         body: JSON.stringify(categoric),
       });
     } else {
-      await fetch(`/api/socialMedia`, {
+      await fetch(`/api/categoric`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -148,7 +148,7 @@ const Categoric = () => {
           showAddButton={true}
           onAddClick={(id) => loadingModal(id as string | undefined)}
           showActionButtonsColumn
-          onRemoveClick={(id) => handleRemoveSocialMedia(id as string)}
+          onRemoveClick={(id) => handleRemoveCategoric(id as string)}
           showSearchButton
         />
 

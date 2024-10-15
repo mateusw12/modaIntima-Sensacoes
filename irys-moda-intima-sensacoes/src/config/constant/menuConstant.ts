@@ -39,7 +39,7 @@ export const MANAGEMENT_ITEMS: IMenuItems[] = [
   {
     title: "Cadastros",
     subCategories: [
-      { title: "Produto", disabled: true },
+      { title: "Produto", path: "produto" },
       { title: "Categoria", path: "categoria" },
       { title: "Método de Pagamento", path: "metodo-pagamento" },
       { title: "Oferta", disabled: true },
