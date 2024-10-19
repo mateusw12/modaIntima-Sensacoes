@@ -8,8 +8,8 @@ export interface SelectProps {
   label?: string;
   children: any;
   fullWidth?: boolean;
-  value?: string[] | [];
-  onChange?: (event: SelectChangeEvent) => void;
+  value?: string[];
+  onChange?: (event: SelectChangeEvent<string[]>) => void; 
   disabled?: boolean;
 }
 
@@ -23,6 +23,7 @@ export const Multiselect = (props: SelectProps) => {
         id={props.label}
         multiple
         variant="standard"
+        value={props.value || []}
         fullWidth={props.fullWidth}
         onChange={props.onChange}
         disabled={props.disabled}

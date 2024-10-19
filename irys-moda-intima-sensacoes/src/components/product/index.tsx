@@ -29,7 +29,7 @@ interface ProductForm {
   price: number;
   registrationDate: Date;
   codCategoria: any;
-  size: any;
+  size: string[];
   image: { name: string; byte: string }[];
 }
 
@@ -182,6 +182,7 @@ const Product = () => {
   };
 
   const loadingModal = async (id?: string) => {
+    form.setFieldValue("size", [])
     if (id) {
       try {
         const response = await fetch(`/api/product?cod=${id}`, {
@@ -196,9 +197,14 @@ const Product = () => {
             "Content-Type": "application/json",
           },
         });
-
+  
         const result = (await response.json()) as IProduct;
         const resultImage = (await responseImages.json()) as IProductImage;
+  
+        const sizeArray = result.tamanho.includes(',')
+          ? result.tamanho.split(',').map((size) => size.trim())
+          : [result.tamanho];
+  
         form.setFieldsValue({
           id: result._id,
           name: result.nome,
@@ -208,7 +214,7 @@ const Product = () => {
           image: resultImage.imagens,
           price: result.preco,
           registrationDate: new Date(),
-          size: result.tamanho,
+          size: sizeArray,
         });
         setIsModalOpen(true);
       } catch (error) {
@@ -221,6 +227,7 @@ const Product = () => {
       setIsModalOpen(true);
     }
   };
+  
 
   const handleFileUpload = async (files: FileList) => {
     const filesArray: { name: string; byte: string }[] = [];
@@ -316,7 +323,7 @@ const Product = () => {
                   <Multiselect
                     label="Tamanho"
                     fullWidth
-                    value={form.getFieldValue("size")}
+                    value={form.getFieldValue("size") || []}
                     onChange={(event) =>
                       form.setFieldValue("size", event.target.value)
                     }
