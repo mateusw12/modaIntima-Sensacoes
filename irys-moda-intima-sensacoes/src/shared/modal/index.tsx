@@ -47,7 +47,7 @@ const Modal = (props: {
       style={{ display: "flex", justifyContent: "center" }}
       styles={{
         body: {
-          maxHeight: modalSize?.maxHeight || "70vh",
+          maxHeight: modalSize?.maxHeight || "50vh",
           overflowY: "auto",
           overflow: modalSize?.overflow,
           minHeight: modalSize?.minHeight || "100px",
